@@ -3,7 +3,8 @@
 
 **Shopiko** is a complete and modern **e-commerce platform** designed to provide a smooth online shopping experience — from browsing and cart management to secure checkout. This project mimics all essential real-world e-commerce features, making it ideal for learning full-stack development or showcasing your portfolio.
 
-🚧 **Note:** Deployment in progress .
+---
+## Live Demo : Click Here ---> https://shopiko-1.onrender.com
 
 ---
 
