@@ -1,6 +1,6 @@
 const express =  require('express');
-const Product = require('../models/product');
-const Review = require('../models/review');
+const Product = require('../models/Product');
+const Review = require('../models/Review');
 const {validateReview , isLoggedIn} = require('../middlewares')
 
 const router = express.Router();
