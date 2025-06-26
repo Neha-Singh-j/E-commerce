@@ -80,6 +80,7 @@ npm start
 ## ✨ Future Enhancements
 
 * 📧 Email verification
+* AI Intregation
 * 📦 Order history page for users
 * 📊 Analytics dashboard for admin
 * 🔍 Search and filter by category/price
