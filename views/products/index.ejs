@@ -1,49 +1,91 @@
-<%-include('../partials/header')%>
-<%-include('../partials/navbar')%>
-<%-include('../partials/flash')%>
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
 
-<div class="container py-5" style="margin-top: 80px;">
-    <h1 class="text-center mb-5 gradient-text" style="background: linear-gradient(to right, #6a11cb, #fc4a1a); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;">
-        Featured Products
-    </h1>
+<!-- Shop by Category Section -->
+<div class="container py-4" style="margin-top: 80px;">
+  <h2 class="text-center mb-4" style="font-weight: bold; color: #6a11cb;">Shop by Category</h2>
+  
+  <div class="category-container d-flex flex-wrap justify-content-center gap-3 mb-5">
+    <a href="/products?category=Ethnic Wear"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Ethnic Wear</div></a>
+    <a href="/products?category=Western Dresses"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Western Dresses</div></a>
+    <a href="/products?category=Menswear"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Menswear</div></a>
+    <a href="/products?category=Footwear"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Footwear</div></a>
+    <a href="/products?category=Home Decor"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Home Decor</div></a>
+    <a href="/products?category=Beauty"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Beauty</div></a>
+    <a href="/products?category=Accessories"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Accessories</div></a>
+    <a href="/products?category=Grocery"><div class="category-card btn btn-light px-4 py-3 shadow-sm">Grocery</div></a>
+  </div>
 
-    <div class="row g-4">
-        <% for(let item of products){ %>
-            <div class="col-lg-4 col-md-6">
-                <div class="card product-card h-100 border-0 shadow-sm" style="border-radius: 12px; overflow: hidden; transition: transform 0.3s ease;">
-                    <div class="position-relative">
-                        <img src="<%=item.img%>" class="card-img-top" alt="<%=item.name%>" style="height: 220px; object-fit: cover;">
-                        <button class="btn like-btn position-absolute top-0 end-0 m-2" product-id="<%=item._id%>" style="background: rgba(255,255,255,0.8); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                            <% if(currentUser && currentUser.wishlist.includes(item._id)){ %>
-                                <i class="fa-solid fa-heart" style="color: #fc4a1a; font-size: 1.2rem;"></i>
-                            <% } else{ %>
-                                <i class="fa-regular fa-heart" style="color: #6a11cb; font-size: 1.2rem;"></i>
-                            <% } %>
-                        </button>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <div class="mb-3">
-                            <h3 class="card-title fw-bold" style="color: #2c0b5e;"><%= item.name %></h3>
-                            <p class="card-text text-muted"><%= item.desc.substring(0, 60) %>...</p>
-                        </div>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="mb-0 fw-bold" style="color: #fc4a1a;">Rs. <%= item.price %></h5>
-                                <span class="badge rounded-pill px-3 py-2" style="background-color: #f3e5ff; color: #6a11cb;">
-                                    <%= item.instock %> in stock
-                                </span>
-                            </div>
-                            <a href="/products/<%=item._id%>" class="btn w-100 py-2 fw-bold" style="background: linear-gradient(to right, #6a11cb, #fc4a1a); color: white; border: none;">
-                                View Product
-                            </a>
-                        </div>
-                    </div>
-                </div>
+  <!-- Filtered Product Heading -->
+  <h2 class="text-center mb-4">
+    <%= typeof category !== 'undefined' ? `${category} Products` : "All Products" %>
+  </h2>
+
+  <% if (typeof selectedCategory !== 'undefined' && selectedCategory !== 'All') { %>
+    <h5 class="text-center mb-4 text-muted">
+        Showing results for: <strong><%= selectedCategory %></strong>
+    </h5>
+  <% } %>
+
+  <!-- Category Filter Dropdown -->
+  <form method="GET" action="/products" class="mb-4 text-center">
+    <select name="category" onchange="this.form.submit()" class="form-select mx-auto" style="width: 200px;">
+      <option value="All" <%= selectedCategory === 'All' ? 'selected' : '' %>>All Categories</option>
+      <% if (typeof categories !== 'undefined') { %>
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat %>" <%= selectedCategory === cat ? 'selected' : '' %>><%= cat %></option>
+        <% }) %>
+      <% } %>
+    </select>
+  </form>
+
+  <!-- Product Grid -->
+  <div class="row g-4 mb-5">
+    <% if (products && products.length > 0) { %>
+      <% products.forEach(item => { %>
+        <div class="col-lg-4 col-md-6">
+          <div class="card product-card h-100 border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+            <div class="position-relative">
+              <img src="<%= item.img %>" class="card-img-top" alt="<%= item.name %>" style="height: 220px; object-fit: cover;">
+              <button class="btn like-btn position-absolute top-0 end-0 m-2" product-id="<%= item._id %>" style="background: rgba(255,255,255,0.8); border-radius: 50%; width: 40px; height: 40px;">
+                <% if (currentUser && currentUser.wishlist.includes(item._id)) { %>
+                  <i class="fa-solid fa-heart" style="color: #fc4a1a; font-size: 1.2rem;"></i>
+                <% } else { %>
+                  <i class="fa-regular fa-heart" style="color: #6a11cb; font-size: 1.2rem;"></i>
+                <% } %>
+              </button>
             </div>
-        <% } %>
-    </div>
+            <div class="card-body d-flex flex-column">
+              <div class="mb-3">
+                <h3 class="card-title fw-bold" style="color: #2c0b5e;"><%= item.name %></h3>
+                <p class="card-text text-muted"><%= item.desc.substring(0, 60) %>...</p>
+              </div>
+              <div class="mt-auto">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="mb-0 fw-bold" style="color: #fc4a1a;">Rs. <%= item.price %></h5>
+                  <span class="badge rounded-pill px-3 py-2" style="background-color: #f3e5ff; color: #6a11cb;">
+                    <%= item.instock %> in stock
+                  </span>
+                </div>
+                <a href="/products/<%= item._id %>" class="btn w-100 py-2 fw-bold" style="background: linear-gradient(to right, #6a11cb, #fc4a1a); color: white; border: none;">
+                  View Product
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="col-12">
+        <h4 class="text-center text-muted">No products found in this category.</h4>
+      </div>
+    <% } %>
+  </div>
 </div>
 
+<!-- JS scripts -->
 <script src="/js/common.js"></script>
+<script src="/js/wishlist.js"></script>
 
-<%-include('../partials/footer')%>
+<%- include('../partials/footer') %>
