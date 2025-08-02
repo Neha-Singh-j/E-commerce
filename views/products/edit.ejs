@@ -50,6 +50,7 @@
                         <div class="mb-4">
                             <label for="des" class="form-label fw-bold" style="color: #6a11cb;">Description:</label>
                             <textarea class="form-control py-2" name="desc" id="des" rows="5" placeholder="Description of Product" required style="border-color: #d1d1d1;"><%=foundProduct.desc%></textarea>
+
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -57,6 +58,21 @@
                                 Please provide a valid description.
                             </div>
                         </div>
+                        <div class="mb-4">
+  <label for="category" class="form-label fw-bold" style="color: #6a11cb;">Category:</label>
+  <select id="category" name="category" class="form-control py-2" required style="border-color: #d1d1d1;">
+    <option value="">Select Category</option>
+    <option value="Electronics" <%= foundProduct.category === "Electronics" ? "selected" : "" %>>Electronics</option>
+    <option value="Books" <%= foundProduct.category === "Books" ? "selected" : "" %>>Books</option>
+    <option value="Clothing" <%= foundProduct.category === "Clothing" ? "selected" : "" %>>Clothing</option>
+    <option value="Beauty" <%= foundProduct.category === "Beauty" ? "selected" : "" %>>Beauty</option>
+    <option value="Furniture" <%= foundProduct.category === "Furniture" ? "selected" : "" %>>Furniture</option>
+  </select>
+  <div class="invalid-feedback" style="color: #fc4a1a;">
+    Please select a category.
+  </div>
+</div>
+
                         
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                             <a href="/products/<%=foundProduct._id%>" class="btn btn-outline-secondary me-md-2 px-4 py-2">Cancel</a>

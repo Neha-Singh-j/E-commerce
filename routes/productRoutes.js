@@ -1,115 +1,133 @@
-const express =  require('express');
-// const Joi = require('joi');
+// productRoutes.js
+const express = require('express');
 const Product = require('../models/Product');
-const router = express.Router();
-const {validateProduct , isLoggedIn, isSeller, isProductAuthor} =  require('../middlewares');
 const Review = require('../models/Review');
+const router = express.Router();
+const { validateProduct, isLoggedIn, isSeller, isProductAuthor } = require('../middlewares');
 
-// displaying all the products
-router.get('/products' , async(req,res)=>{
-    try{
-        let products = await Product.find({});
-        res.render('products/index' , {products});
-    }
-    catch(e){
-        res.status(500).render('error' , {err:e.message});
-    }
-    
-})
+// ✅ Display all products with optional category filter
+router.get('/products', async (req, res) => {
+  try {
+    const { category } = req.query;
+    let products;
 
-
-// adding a fomr for  anew product
-router.get('/products/new' , isLoggedIn ,isSeller , (req,res)=>{
-    try{
-        res.render('products/new');
-    }
-    catch(e){
-        res.status(500).render('error' , {err:e.message});
-    }
-})
-
-// actually adding a product in a DB 
-router.post('/products' ,isLoggedIn , isSeller ,  validateProduct , async (req,res)=>{
-    try{
-        let {name,img,price,desc} = req.body;
-
-        await Product.create({name,img,price,desc , author:req.user._id});
-        req.flash('success' , 'Product added successfully');
-        res.redirect('/products');
-    }
-    catch(e){
-        res.status(500).render('error' , {err:e.message});
-    }
-})
-
-// route for shwoing the deatails of thre products
-router.get('/products/:id' , isLoggedIn , async(req,res)=>{
-    try{
-
-        let {id} = req.params;
-        // let foundProduct = await Product.findById(id);
-        let foundProduct = await Product.findById(id).populate('reviews');
-        // console.log(foundProduct);
-        res.render('products/show' , {foundProduct , msg:req.flash('msg')});
+    if (category && category !== 'All') {
+      products = await Product.find({ category });
+    } else {
+      products = await Product.find({});
     }
 
-    catch(e){
-        res.status(500).render('error' , {err:e.message});
+    const categories = await Product.distinct('category');
+
+    res.render('products/index', {
+      products,
+      categories,
+      selectedCategory: category || 'All'  // ✅ Fixed to match EJS usage
+    });
+  } catch (e) {
+    res.status(500).render('error', { err: e.message });
+  }
+});
+
+// ✅ Route - View products by category with search
+router.get("/category/:categoryName", async (req, res) => {
+  try {
+    const { categoryName } = req.params;
+    const searchQuery = req.query.search || "";
+
+    let products;
+
+    if (searchQuery) {
+      products = await Product.find({
+        category: categoryName,
+        name: { $regex: searchQuery, $options: "i" }
+      });
+    } else {
+      products = await Product.find({ category: categoryName });
     }
 
-})
+    res.render("products/categoryProducts", {
+      category: categoryName,
+      products,
+      searchQuery
+    });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Unable to load products in this category");
+    res.redirect("/products");
+  }
+});
 
-// route for editing the product so we need form for it
-router.get('/products/:id/edit' , isLoggedIn , isSeller , async(req,res)=>{
-    try{
+// ✅ New product form
+router.get('/products/new', isLoggedIn, isSeller, (req, res) => {
+  try {
+    res.render('products/new');
+  } catch (e) {
+    res.status(500).render('error', { err: e.message });
+  }
+});
 
-        let {id} = req.params;
-        let foundProduct = await Product.findById(id);
-        res.render('products/edit' , {foundProduct});
-        
+// ✅ Create product
+router.post('/products', isLoggedIn, isSeller, validateProduct, async (req, res) => {
+  try {
+    const { name, img, price, desc, category } = req.body;
+    await Product.create({ name, img, price, desc, category, author: req.user._id });
+    req.flash('success', 'Product added successfully');
+    res.redirect('/products');
+  } catch (e) {
+    res.status(500).render('error', { err: e.message });
+  }
+});
+
+// ✅ Show product details
+router.get('/products/:id', isLoggedIn, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const foundProduct = await Product.findById(id).populate('reviews');
+    res.render('products/show', { foundProduct, msg: req.flash('msg') });
+  } catch (e) {
+    res.status(500).render('error', { err: e.message });
+  }
+});
+
+// ✅ Edit product form
+router.get('/products/:id/edit', isLoggedIn, isSeller, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const foundProduct = await Product.findById(id);
+    res.render('products/edit', { foundProduct });
+  } catch (e) {
+    res.status(500).render('error', { err: e.message });
+  }
+});
+
+// ✅ Update product
+router.patch('/products/:id', isLoggedIn, isSeller, isProductAuthor, validateProduct, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, img, price, desc, category } = req.body;
+    await Product.findByIdAndUpdate(id, { name, img, price, desc, category });
+    req.flash('success', 'Product edited successfully');
+    res.redirect(`/products/${id}`);
+  } catch (e) {
+    res.status(500).render('error', { err: e.message });
+  }
+});
+
+// ✅ Delete product
+router.delete('/products/:id', isLoggedIn, isSeller, isProductAuthor, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    for (let reviewId of product.reviews) {
+      await Review.findByIdAndDelete(reviewId);
     }
-    catch(e){
-        res.status(500).render('error' , {err:e.message});
-    }
-})
-
-// changing the original edits in the database made in the editform 
-router.patch('/products/:id',isLoggedIn , isSeller, isProductAuthor, validateProduct, async(req,res)=>{
-    try{
-
-        let {id} = req.params;
-        let {name,img,price,desc} = req.body;
-        await Product.findByIdAndUpdate(id , {name,img,price,desc});
-        req.flash('success' , 'Product edited successfully');
-        res.redirect(`/products/${id}`)
-    }
-
-    catch(e){
-        res.status(500).render('error' , {err:e.message});
-    }
-})
-
-//delete a route
-router.delete('/products/:id' , isLoggedIn, isSeller , isProductAuthor , async(req,res)=>{
-    try{
-
-        let {id} = req.params;
-        const product = await Product.findById(id);
-        
-        for(let id of product.reviews){
-            await Review.findByIdAndDelete(id);
-        }
-        
-        await Product.findByIdAndDelete(id);
-        req.flash('success' , 'Product deleted successfully');
-        res.redirect('/products');
-    }
-
-    catch(e){
-        res.status(500).render('error' , {err:e.message});
-    }
-})
-
-
+    await Product.findByIdAndDelete(id);
+    req.flash('success', 'Product deleted successfully');
+    res.redirect('/products');
+  } catch (e) {
+    res.status(500).render('error', { err: e.message });
+  }
+});
 
 module.exports = router;
