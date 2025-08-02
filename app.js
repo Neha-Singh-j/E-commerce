@@ -1,26 +1,28 @@
-require('dotenv').config();
 const express = require("express");
 const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
-const seeddB = require("./seed");
+const seedDB = require("./seed");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
-
 const productRoutes = require("./routes/productRoutes");
-const productsCategoryRoutes = require('./routes/products'); // ✅ added line
 const reviewRoutes = require("./routes/review");
 const authRoutes = require("./routes/auth");
 const cartRoutes = require("./routes/cart");
-const productApi = require("./routes/api/productapi");
-
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const User = require("./models/User");
+const productApi = require("./routes/api/productapi"); //api
+const passport = require("passport"); //pass
+const LocalStrategy = require("passport-local"); //pass
+const User = require("./models/User"); //pass
+require("dotenv").config(); // Make sure this is at the top
 
 mongoose.set("strictQuery", true);
-mongoose.connect(process.env.MONGO_URL)
+
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("✅ MongoDB connected successfully");
   })
@@ -28,11 +30,17 @@ mongoose.connect(process.env.MONGO_URL)
     console.error("❌ MongoDB connection error:", err);
   });
 
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+// now for public folder
 app.use(express.static(path.join(__dirname, "public")));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+
+// seeding dummy data
+// seedDB();
 
 let configSession = {
   secret: process.env.SECRET || "keyboard cat",
@@ -48,11 +56,14 @@ let configSession = {
 app.use(session(configSession));
 app.use(flash());
 
-app.use(passport.initialize());
-app.use(passport.session());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-passport.use(new LocalStrategy(User.authenticate()));
+// use static serialize and deserialize of model for passport session support
+app.use(passport.initialize()); //pass
+app.use(passport.session()); //pass
+passport.serializeUser(User.serializeUser()); //pass
+passport.deserializeUser(User.deserializeUser()); //pass
+
+// use static authenticate method of model in LocalStrategy
+passport.use(new LocalStrategy(User.authenticate())); //pass
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -65,9 +76,8 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-// ✅ Registering routes
+// Routes
 app.use(productRoutes);
-app.use(productsCategoryRoutes); // ✅ added this
 app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
