@@ -1,0 +1,141 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5 pt-5">
+  <div class="row">
+    <div class="col-lg-10 mx-auto">
+      <h1 class="text-center mb-5 fw-bold" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Contact Us</h1>
+      
+      <div class="row">
+        <!-- Contact Form -->
+        <div class="col-lg-8 mb-4">
+          <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="card-body p-5">
+              <h3 class="text-white mb-4">Send us a Message</h3>
+              
+              <form>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label text-white">First Name</label>
+                    <input type="text" class="form-control" id="firstName" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label text-white">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" required>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label text-white">Email Address</label>
+                    <input type="email" class="form-control" id="email" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label text-white">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone">
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="subject" class="form-label text-white">Subject</label>
+                  <select class="form-select" id="subject" required>
+                    <option value="">Choose a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="order">Order Issue</option>
+                    <option value="refund">Refund Request</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="feedback">Feedback</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="message" class="form-label text-white">Message</label>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Please describe your inquiry in detail..." required></textarea>
+                </div>
+                
+                <div class="mb-3 form-check">
+                  <input class="form-check-input" type="checkbox" id="newsletter">
+                  <label class="form-check-label text-white-50" for="newsletter">
+                    Subscribe to our newsletter for updates and offers
+                  </label>
+                </div>
+                
+                <div class="text-center">
+                  <button type="submit" class="btn btn-light btn-lg px-5">Send Message</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="col-lg-4">
+          <div class="card shadow-lg border-0 mb-4" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);">
+            <div class="card-body p-4 text-center">
+              <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="fas fa-map-marker-alt fs-2" style="color: #ff6b6b;"></i>
+              </div>
+              <h5 class="text-white mb-2">Visit Us</h5>
+              <p class="text-white-50 mb-0">123 Market Street<br>New York, NY 10001<br>United States</p>
+            </div>
+          </div>
+          
+          <div class="card shadow-lg border-0 mb-4" style="background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);">
+            <div class="card-body p-4 text-center">
+              <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="fas fa-phone fs-2" style="color: #4ecdc4;"></i>
+              </div>
+              <h5 class="text-white mb-2">Call Us</h5>
+              <p class="text-white-50 mb-0">+1 (555) 987-6543<br>Mon-Fri: 9AM-6PM<br>Sat: 10AM-4PM</p>
+            </div>
+          </div>
+          
+          <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+            <div class="card-body p-4 text-center">
+              <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="fas fa-envelope fs-2" style="color: #a8edea;"></i>
+              </div>
+              <h5 class="text-dark mb-2">Email Us</h5>
+              <p class="text-muted mb-0">support@shopiko.com<br>info@shopiko.com<br>Response within 24h</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional Information -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="card shadow border-0">
+            <div class="card-body p-4">
+              <h4 class="text-center mb-4" style="color: #667eea;">Why Choose Shopiko?</h4>
+              <div class="row text-center">
+                <div class="col-md-3 mb-3">
+                  <i class="fas fa-shipping-fast fs-1 text-primary mb-2"></i>
+                  <h6>Fast Shipping</h6>
+                  <p class="text-muted small">Quick delivery to your doorstep</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <i class="fas fa-shield-alt fs-1 text-success mb-2"></i>
+                  <h6>Secure Shopping</h6>
+                  <p class="text-muted small">Your data is always protected</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <i class="fas fa-headset fs-1 text-info mb-2"></i>
+                  <h6>24/7 Support</h6>
+                  <p class="text-muted small">We're here when you need us</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <i class="fas fa-undo fs-1 text-warning mb-2"></i>
+                  <h6>Easy Returns</h6>
+                  <p class="text-muted small">Hassle-free return process</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %> 

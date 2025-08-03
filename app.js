@@ -11,6 +11,7 @@ const reviewRoutes = require("./routes/review");
 const authRoutes = require("./routes/auth");
 const cartRoutes = require("./routes/cart");
 const productApi = require("./routes/api/productapi"); //api
+const staticRoutes = require("./routes/static"); //static pages
 const passport = require("passport"); //pass
 const LocalStrategy = require("passport-local"); //pass
 const User = require("./models/User"); //pass
@@ -18,8 +19,11 @@ require("dotenv").config(); // Make sure this is at the top
 
 mongoose.set("strictQuery", true);
 
+// Use a default MongoDB URI if not provided in environment
+const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/shopiko";
+
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -28,6 +32,7 @@ mongoose
   })
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err);
+    console.log("💡 Make sure MongoDB is running or set MONGO_URI in .env file");
   });
 
 
@@ -82,6 +87,7 @@ app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(productApi);
+app.use(staticRoutes);
 
 const port = 8080;
 app.listen(port, () => {

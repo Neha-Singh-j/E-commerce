@@ -1,0 +1,102 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5 pt-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="card-body p-5">
+          <h1 class="text-center text-white mb-4 fw-bold">Share Your Feedback</h1>
+          <p class="text-center text-white-50 mb-5">We value your opinion! Help us improve Shopiko by sharing your thoughts.</p>
+          
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label text-white">Full Name</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label text-white">Email Address</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="category" class="form-label text-white">Feedback Category</label>
+              <select class="form-select" id="category" required>
+                <option value="">Choose a category</option>
+                <option value="general">General Feedback</option>
+                <option value="product">Product Quality</option>
+                <option value="service">Customer Service</option>
+                <option value="website">Website Experience</option>
+                <option value="suggestion">Suggestion</option>
+                <option value="complaint">Complaint</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="rating" class="form-label text-white">Overall Rating</label>
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <i class="far fa-star fs-4 text-warning" data-rating="1"></i>
+                  <i class="far fa-star fs-4 text-warning" data-rating="2"></i>
+                  <i class="far fa-star fs-4 text-warning" data-rating="3"></i>
+                  <i class="far fa-star fs-4 text-warning" data-rating="4"></i>
+                  <i class="far fa-star fs-4 text-warning" data-rating="5"></i>
+                </div>
+                <span class="text-white-50" id="rating-text">Click to rate</span>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="message" class="form-label text-white">Your Feedback</label>
+              <textarea class="form-control" id="message" rows="5" placeholder="Please share your detailed feedback here..." required></textarea>
+            </div>
+            
+            <div class="mb-3 form-check">
+              <input class="form-check-input" type="checkbox" id="anonymous">
+              <label class="form-check-label text-white-50" for="anonymous">
+                Submit anonymously
+              </label>
+            </div>
+            
+            <div class="text-center">
+              <button type="submit" class="btn btn-light btn-lg px-5">Submit Feedback</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const stars = document.querySelectorAll('[data-rating]');
+  const ratingText = document.getElementById('rating-text');
+  let currentRating = 0;
+  
+  stars.forEach(star => {
+    star.addEventListener('click', function() {
+      const rating = parseInt(this.getAttribute('data-rating'));
+      currentRating = rating;
+      
+      // Update stars
+      stars.forEach((s, index) => {
+        if (index < rating) {
+          s.classList.remove('far');
+          s.classList.add('fas');
+        } else {
+          s.classList.remove('fas');
+          s.classList.add('far');
+        }
+      });
+      
+      // Update text
+      const texts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+      ratingText.textContent = texts[rating];
+    });
+  });
+});
+</script>
+
+<%- include('../partials/footer') %> 
