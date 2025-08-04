@@ -17,6 +17,17 @@ const LocalStrategy = require("passport-local"); //pass
 const User = require("./models/User"); //pass
 require("dotenv").config(); // Make sure this is at the top
 
+// Environment variable validation
+const requiredEnvVars = ['MONGO_URI', 'SECRET'];
+const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'production') {
+  console.error('❌ Missing required environment variables:', missingEnvVars);
+  console.error('💡 Please set these variables in your deployment environment');
+  console.error('💡 For now, using default values but this may cause issues');
+  // Don't exit in production, just warn
+}
+
 mongoose.set("strictQuery", true);
 
 // Use a default MongoDB URI if not provided in environment
@@ -29,10 +40,18 @@ mongoose
   })
   .then(() => {
     console.log("✅ MongoDB connected successfully");
+    console.log(`📊 Database: ${mongoURI.includes('localhost') ? 'Local MongoDB' : 'Cloud MongoDB'}`);
   })
   .catch((err) => {
-    console.error("❌ MongoDB connection error:", err);
-    console.log("💡 Make sure MongoDB is running or set MONGO_URI in .env file");
+    console.error("❌ MongoDB connection error:", err.message);
+    if (!process.env.MONGO_URI) {
+      console.log("💡 For local development: Make sure MongoDB is running locally");
+      console.log("💡 For production: Set MONGO_URI environment variable");
+    } else {
+      console.log("💡 Check your MONGO_URI connection string");
+    }
+    console.log("⚠️ App will start without database connection - some features may not work");
+    // Don't exit - let the app start without database
   });
 
 
@@ -45,7 +64,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 // seeding dummy data
-// seedDB();
+// seedDB(); // Commented out to prevent crashes when DB is not available
 
 let configSession = {
   secret: process.env.SECRET || "keyboard cat",
@@ -89,7 +108,7 @@ app.use(cartRoutes);
 app.use(productApi);
 app.use(staticRoutes);
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`server connected at port : ${port}`);
 });
