@@ -14,7 +14,7 @@ const productApi = require("./routes/api/productapi"); //api
 const staticRoutes = require("./routes/static"); //static pages
 const passport = require("passport"); //pass
 const LocalStrategy = require("passport-local"); //pass
-const User = require("./models/User"); //pass
+// User model will be loaded conditionally after DB connection
 require("dotenv").config(); // Make sure this is at the top
 
 // Environment variable validation
@@ -30,6 +30,22 @@ if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'production') {
 
 mongoose.set("strictQuery", true);
 
+// Function to initialize passport after DB connection
+function initializePassport() {
+  try {
+    const User = require("./models/User");
+    app.use(passport.initialize());
+    app.use(passport.session());
+    passport.serializeUser(User.serializeUser());
+    passport.deserializeUser(User.deserializeUser());
+    passport.use(new LocalStrategy(User.authenticate()));
+    console.log("✅ Passport authentication configured successfully");
+  } catch (error) {
+    console.error("⚠️ Passport configuration failed:", error.message);
+    console.log("⚠️ Authentication features may not work without database");
+  }
+}
+
 // Use a default MongoDB URI if not provided in environment
 const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/shopiko";
 
@@ -41,6 +57,7 @@ mongoose
   .then(() => {
     console.log("✅ MongoDB connected successfully");
     console.log(`📊 Database: ${mongoURI.includes('localhost') ? 'Local MongoDB' : 'Cloud MongoDB'}`);
+    initializePassport(); // Call the function after DB connection
   })
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err.message);
@@ -51,7 +68,8 @@ mongoose
       console.log("💡 Check your MONGO_URI connection string");
     }
     console.log("⚠️ App will start without database connection - some features may not work");
-    // Don't exit - let the app start without database
+    // Initialize passport even without DB for basic functionality
+    initializePassport();
   });
 
 
@@ -81,19 +99,7 @@ app.use(session(configSession));
 app.use(flash());
 
 // use static serialize and deserialize of model for passport session support
-try {
-  app.use(passport.initialize()); //pass
-  app.use(passport.session()); //pass
-  passport.serializeUser(User.serializeUser()); //pass
-  passport.deserializeUser(User.deserializeUser()); //pass
 
-  // use static authenticate method of model in LocalStrategy
-  passport.use(new LocalStrategy(User.authenticate())); //pass
-  console.log("✅ Passport authentication configured successfully");
-} catch (error) {
-  console.error("⚠️ Passport configuration failed:", error.message);
-  console.log("⚠️ Authentication features may not work without database");
-}
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -104,6 +110,11 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => {
   res.render("home");
+});
+
+// Test route to verify app is working
+app.get("/test", (req, res) => {
+  res.json({ message: "App is working!", timestamp: new Date().toISOString() });
 });
 
 // Routes
