@@ -81,13 +81,19 @@ app.use(session(configSession));
 app.use(flash());
 
 // use static serialize and deserialize of model for passport session support
-app.use(passport.initialize()); //pass
-app.use(passport.session()); //pass
-passport.serializeUser(User.serializeUser()); //pass
-passport.deserializeUser(User.deserializeUser()); //pass
+try {
+  app.use(passport.initialize()); //pass
+  app.use(passport.session()); //pass
+  passport.serializeUser(User.serializeUser()); //pass
+  passport.deserializeUser(User.deserializeUser()); //pass
 
-// use static authenticate method of model in LocalStrategy
-passport.use(new LocalStrategy(User.authenticate())); //pass
+  // use static authenticate method of model in LocalStrategy
+  passport.use(new LocalStrategy(User.authenticate())); //pass
+  console.log("✅ Passport authentication configured successfully");
+} catch (error) {
+  console.error("⚠️ Passport configuration failed:", error.message);
+  console.log("⚠️ Authentication features may not work without database");
+}
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -101,12 +107,23 @@ app.get("/", (req, res) => {
 });
 
 // Routes
+console.log("🔧 Registering routes...");
 app.use(productRoutes);
 app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(productApi);
 app.use(staticRoutes);
+console.log("✅ All routes registered successfully");
+
+// 404 handler - must be last
+app.use('*', (req, res) => {
+  console.log(`❌ Route not found: ${req.originalUrl}`);
+  res.status(404).render('error', { 
+    message: `Page not found: ${req.originalUrl}`,
+    error: { status: 404 }
+  });
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
