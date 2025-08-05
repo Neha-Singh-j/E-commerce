@@ -26,9 +26,15 @@ router.post(
     failureMessage: true,
   }),
   function (req, res) {
-    // console.log(req.user , "User");
-    req.flash("success", `Welcome Back ${req.user.username}`);
-    res.redirect("/products");
+    try{
+      // console.log(req.user.username, "User");
+      req.flash("success", `Welcome Back ${req.user.username}`);
+      // res.json(`Welcome Back ${req.user.username}`);
+      res.redirect("/products");
+    }
+    catch(error){
+      res.json(error);
+    }
   }
 );
 

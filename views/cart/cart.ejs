@@ -27,7 +27,9 @@
               </div>
               <p class="card-text text-muted mb-3"><%=item.desc%></p>
               <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-danger btn-sm">Remove</button>
+                <form action="/user/<%=item._id%>/delete" method="POST">
+                  <button class="btn btn-outline-danger btn-sm">Remove</button>
+                </form>
               </div>
             </div>
           </div>
