@@ -1,36 +1,82 @@
 const express = require("express");
-const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
-const seedDB = require("./seed");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
-const productRoutes = require("./routes/productRoutes");
-const reviewRoutes = require("./routes/review");
-const authRoutes = require("./routes/auth");
-const cartRoutes = require("./routes/cart");
-const productApi = require("./routes/api/productapi"); //api
-const staticRoutes = require("./routes/static"); //static pages
-const passport = require("passport"); //pass
-const LocalStrategy = require("passport-local"); //pass
-// User model will be loaded conditionally after DB connection
-require("dotenv").config(); // Make sure this is at the top
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
-// Environment variable validation
-const requiredEnvVars = ['MONGO_URI', 'SECRET'];
-const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+// Import configuration and security middleware
+const { config } = require("./config/config");
+const {
+  generalLimiter,
+  authLimiter,
+  apiLimiter,
+  corsOptions,
+  // helmetConfig,
+  errorHandler,
+  notFound,
+  requestLogger,
+  securityHeaders,
+  sanitizeInput,
+} = require("./middlewares/security");
 
-if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'production') {
-  console.error('❌ Missing required environment variables:', missingEnvVars);
-  console.error('💡 Please set these variables in your deployment environment');
-  console.error('💡 For now, using default values but this may cause issues');
-  // Don't exit in production, just warn
-}
+// Import production routes
+const productionRoutes = require("./routes/production");
+const staticRoutes = require("./routes/static");
 
-mongoose.set("strictQuery", true);
+// Import models and utilities
+const seedDB = require("./seed");
 
-// Function to initialize passport after DB connection
+// Initialize Express app
+const app = express();
+
+// Load environment variables
+require("dotenv").config();
+
+// Security middleware
+// app.use(require("helmet")(helmetConfig));
+app.use(require("cors")(corsOptions));
+app.use(securityHeaders);
+app.use(sanitizeInput);
+
+// Rate limiting
+app.use(generalLimiter);
+app.use("/auth", authLimiter);
+app.use("/api", apiLimiter);
+
+// Request logging
+app.use(requestLogger);
+
+// View engine setup
+app.set("view engine", "ejs");
+app.set("views", config.paths.views);
+
+// Static files
+app.use(express.static(config.paths.public));
+
+// Body parsing middleware
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(methodOverride("_method"));
+
+// Session configuration
+const sessionConfig = {
+  ...config.session,
+  secret: config.security.sessionSecret,
+  name: "shopiko_session", // Change default session name
+  cookie: {
+    ...config.session.cookie,
+    secure: config.app.env === "production",
+    sameSite: config.app.env === "production" ? "strict" : "lax",
+  },
+};
+
+app.use(session(sessionConfig));
+app.use(flash());
+
+// Passport configuration
 function initializePassport() {
   try {
     const User = require("./models/User");
@@ -46,97 +92,103 @@ function initializePassport() {
   }
 }
 
-// Use a default MongoDB URI if not provided in environment
-const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/shopiko";
+// Database connection
+mongoose.set("strictQuery", true);
 
 mongoose
-  .connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(config.database.uri, config.database.options)
   .then(() => {
     console.log("✅ MongoDB connected successfully");
-    console.log(`📊 Database: ${mongoURI.includes('localhost') ? 'Local MongoDB' : 'Cloud MongoDB'}`);
-    initializePassport(); // Call the function after DB connection
+    console.log(`📊 Database: ${config.database.uri.includes('localhost') ? 'Local MongoDB' : 'Cloud MongoDB'}`);
+    initializePassport();
+    
+    // Seed database if enabled
+    if (config.development.seedDatabase) {
+      console.log("🌱 Seeding database...");
+      seedDB();
+    }
   })
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err.message);
-    if (!process.env.MONGO_URI) {
+    if (!config.database.uri.includes('localhost')) {
+      console.log("💡 Check your MONGO_URI connection string");
+    } else {
       console.log("💡 For local development: Make sure MongoDB is running locally");
       console.log("💡 For production: Set MONGO_URI environment variable");
-    } else {
-      console.log("💡 Check your MONGO_URI connection string");
     }
     console.log("⚠️ App will start without database connection - some features may not work");
-    // Initialize passport even without DB for basic functionality
     initializePassport();
   });
 
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-// now for public folder
-app.use(express.static(path.join(__dirname, "public")));
-
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-
-// seeding dummy data
-// seedDB(); // Commented out to prevent crashes when DB is not available
-
-let configSession = {
-  secret: process.env.SECRET || "keyboard cat",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true,
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  },
-};
-
-app.use(session(configSession));
-app.use(flash());
-
-// use static serialize and deserialize of model for passport session support
-
-
+// Global middleware for user and flash messages
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.appName = config.app.name;
+  res.locals.appVersion = config.app.version;
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
-// Test route to verify app is working
-app.get("/test", (req, res) => {
-  res.json({ message: "App is working!", timestamp: new Date().toISOString() });
-});
-
-// Routes
-console.log("🔧 Registering routes...");
-app.use(productRoutes);
-app.use(reviewRoutes);
-app.use(authRoutes);
-app.use(cartRoutes);
-app.use(productApi);
-app.use(staticRoutes);
-console.log("✅ All routes registered successfully");
-
-// 404 handler - must be last
-app.use('*', (req, res) => {
-  console.log(`❌ Route not found: ${req.originalUrl}`);
-  res.status(404).render('error', { 
-    message: `Page not found: ${req.originalUrl}`,
-    error: { status: 404 }
+// Health check route
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: config.app.env,
+    version: config.app.version,
   });
 });
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
-  console.log(`server connected at port : ${port}`);
+// Home route
+app.get("/", (req, res) => {
+  res.render("home", {
+    title: "Welcome to Shopiko",
+    description: "Your one-stop shop for everything you need",
+  });
 });
+
+// Test route
+app.get("/test", (req, res) => {
+  res.json({ 
+    message: "App is working!", 
+    timestamp: new Date().toISOString(),
+    environment: config.app.env,
+    version: config.app.version,
+  });
+});
+
+// Mount production routes
+console.log("🔧 Registering production routes...");
+app.use("/", productionRoutes);
+app.use("/", staticRoutes);
+console.log("✅ All production routes registered successfully");
+
+// 404 handler
+app.use("*", notFound);
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
+
+// Graceful shutdown
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received, shutting down gracefully");
+  process.exit(0);
+});
+
+process.on("SIGINT", () => {
+  console.log("SIGINT received, shutting down gracefully");
+  process.exit(0);
+});
+
+// Start server
+const port = config.app.port;
+app.listen(port, () => {
+  console.log(`🚀 Server running on port ${port}`);
+  console.log(`🌍 Environment: ${config.app.env}`);
+  console.log(`📱 App: ${config.app.name} v${config.app.version}`);
+  console.log(`🔗 Health check: http://localhost:${port}/health`);
+});
+
+module.exports = app;
