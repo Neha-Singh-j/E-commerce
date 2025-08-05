@@ -15,8 +15,6 @@ const config = {
   database: {
     uri: process.env.MONGO_URI || 'mongodb://localhost:27017/shopiko',
     options: {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,

@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -14,7 +15,7 @@ const {
   authLimiter,
   apiLimiter,
   corsOptions,
-  // helmetConfig,
+  helmetConfig,
   errorHandler,
   notFound,
   requestLogger,
@@ -36,7 +37,7 @@ const app = express();
 require("dotenv").config();
 
 // Security middleware
-// app.use(require("helmet")(helmetConfig));
+app.use(require("helmet")(helmetConfig));
 app.use(require("cors")(corsOptions));
 app.use(securityHeaders);
 app.use(sanitizeInput);
@@ -66,6 +67,12 @@ const sessionConfig = {
   ...config.session,
   secret: config.security.sessionSecret,
   name: "shopiko_session", // Change default session name
+  store: MongoStore.create({
+    mongoUrl: config.database.uri,
+    mongoOptions: config.database.options,
+    collectionName: 'sessions',
+    ttl: 7 * 24 * 60 * 60, // 7 days
+  }),
   cookie: {
     ...config.session.cookie,
     secure: config.app.env === "production",
@@ -141,28 +148,11 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Home route
-app.get("/", (req, res) => {
-  res.render("home", {
-    title: "Welcome to Shopiko",
-    description: "Your one-stop shop for everything you need",
-  });
-});
 
-// Test route
-app.get("/test", (req, res) => {
-  res.json({ 
-    message: "App is working!", 
-    timestamp: new Date().toISOString(),
-    environment: config.app.env,
-    version: config.app.version,
-  });
-});
 
 // Mount production routes
 console.log("🔧 Registering production routes...");
 app.use("/", productionRoutes);
-app.use("/", staticRoutes);
 console.log("✅ All production routes registered successfully");
 
 // 404 handler

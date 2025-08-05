@@ -1,4 +1,4 @@
-// const helmet = require('helmet');
+const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const { config } = require('../config/config');
@@ -46,26 +46,26 @@ const corsOptions = {
 };
 
 // Helmet configuration for security headers
-// const helmetConfig = {
-//   contentSecurityPolicy: {
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       styleSrc: ["'self'", "'unsafe-inline'"],
-//       scriptSrc: ["'self'"],
-//       imgSrc: ["'self'", "data:", "https:"],
-//       connectSrc: ["'self'"],
-//       fontSrc: ["'self'"],
-//       objectSrc: ["'none'"],
-//       mediaSrc: ["'self'"],
-//       frameSrc: ["'none'"],
-//     },
-//   },
-//   hsts: {
-//     maxAge: 31536000,
-//     includeSubDomains: true,
-//     preload: true,
-//   },
-// };
+const helmetConfig = {
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'none'"],
+    },
+  },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true,
+  },
+};
 
 // Error handling middleware
 const errorHandler = (err, req, res, next) => {
@@ -172,7 +172,7 @@ module.exports = {
   authLimiter,
   apiLimiter,
   corsOptions,
-  // helmetConfig,
+  helmetConfig,
   errorHandler,
   notFound,
   requestLogger,
