@@ -8,6 +8,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "start:simple": "node app-simple.js",
     "dev": "nodemon app.js",
     "build": "npm install",
     "deploy": "node scripts/deploy-production.js && node app.js",

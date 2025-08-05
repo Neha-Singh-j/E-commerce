@@ -36,19 +36,25 @@ const app = express();
 // Load environment variables
 require("dotenv").config();
 
-// Security middleware
-app.use(require("helmet")(helmetConfig));
-app.use(require("cors")(corsOptions));
-app.use(securityHeaders);
-app.use(sanitizeInput);
+// Security middleware (simplified for debugging)
+try {
+  app.use(require("helmet")(helmetConfig));
+  app.use(require("cors")(corsOptions));
+  app.use(securityHeaders);
+  app.use(sanitizeInput);
 
-// Rate limiting
-app.use(generalLimiter);
-app.use("/auth", authLimiter);
-app.use("/api", apiLimiter);
+  // Rate limiting
+  app.use(generalLimiter);
+  app.use("/auth", authLimiter);
+  app.use("/api", apiLimiter);
 
-// Request logging
-app.use(requestLogger);
+  // Request logging
+  app.use(requestLogger);
+  console.log("✅ Security middleware loaded successfully");
+} catch (error) {
+  console.error("⚠️ Security middleware failed:", error.message);
+  console.log("⚠️ Continuing without security middleware");
+}
 
 // View engine setup
 app.set("view engine", "ejs");
@@ -150,18 +156,7 @@ app.get("/health", (req, res) => {
 
 
 
-// Mount production routes
-console.log("🔧 Registering production routes...");
-app.use("/", productionRoutes);
-console.log("✅ All production routes registered successfully");
-
-// Direct feedback route for immediate testing
-app.get("/feedback", (req, res) => {
-  console.log("📍 Direct feedback route accessed");
-  res.render("static/feedback");
-});
-
-// Simple test route
+// Simple test routes (mounted first)
 app.get("/test-feedback", (req, res) => {
   res.json({
     message: "Feedback route is working!",
@@ -169,6 +164,24 @@ app.get("/test-feedback", (req, res) => {
     route: "/test-feedback"
   });
 });
+
+app.get("/feedback", (req, res) => {
+  console.log("📍 Direct feedback route accessed");
+  try {
+    res.render("static/feedback");
+  } catch (error) {
+    res.json({
+      error: "Failed to render feedback page",
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// Mount production routes
+console.log("🔧 Registering production routes...");
+app.use("/", productionRoutes);
+console.log("✅ All production routes registered successfully");
 
 // 404 handler
 app.use("*", notFound);
