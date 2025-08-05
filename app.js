@@ -155,6 +155,21 @@ console.log("🔧 Registering production routes...");
 app.use("/", productionRoutes);
 console.log("✅ All production routes registered successfully");
 
+// Direct feedback route for immediate testing
+app.get("/feedback", (req, res) => {
+  console.log("📍 Direct feedback route accessed");
+  res.render("static/feedback");
+});
+
+// Simple test route
+app.get("/test-feedback", (req, res) => {
+  res.json({
+    message: "Feedback route is working!",
+    timestamp: new Date().toISOString(),
+    route: "/test-feedback"
+  });
+});
+
 // 404 handler
 app.use("*", notFound);
 
