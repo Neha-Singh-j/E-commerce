@@ -157,6 +157,15 @@ app.get("/health", (req, res) => {
 
 
 // Simple test routes (mounted first)
+app.get("/", (req, res) => {
+  res.json({
+    message: "Shopiko is running on Vercel!",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development",
+    platform: "Vercel"
+  });
+});
+
 app.get("/test-feedback", (req, res) => {
   res.json({
     message: "Feedback route is working!",
@@ -200,13 +209,15 @@ process.on("SIGINT", () => {
   process.exit(0);
 });
 
-// Start server
+// Start server (Vercel compatible)
 const port = config.app.port;
-app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
-  console.log(`🌍 Environment: ${config.app.env}`);
-  console.log(`📱 App: ${config.app.name} v${config.app.version}`);
-  console.log(`🔗 Health check: http://localhost:${port}/health`);
-});
+if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
+  app.listen(port, () => {
+    console.log(`🚀 Server running on port ${port}`);
+    console.log(`🌍 Environment: ${config.app.env}`);
+    console.log(`📱 App: ${config.app.name} v${config.app.version}`);
+    console.log(`🔗 Health check: http://localhost:${port}/health`);
+  });
+}
 
 module.exports = app;
