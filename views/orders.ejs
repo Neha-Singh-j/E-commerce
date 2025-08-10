@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My orders</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        .order-container {
+            display: grid;
+            gap : 1.5rem;
+            grid-template-columns: repeat(auto-fit,minmax(300px, 1fr));
+            padding: 2rem;
+        }
+        .order-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        }
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .order-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .order-status {
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            background: #eee;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-shipped {
+            background: #cce5ff;
+            color: #004085;
+        }
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .order-item {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        .order-total {
+            border-top: 1px solid #eee;
+            padding-top: 0.8rem;
+            margin-top: 1rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .empty-orders {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #777;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+<h1 style ="text-align: center; margin-top: 1rem;">
+    Your orders
+</h1>
+<% if (orders.length > 0) { %>
+  <div class="order-container">
+    <% orders.forEach(function(order) { %>
+      <div class="order-card">
+        <div class="order-header">
+          <div class="order-date">
+            <%= order.orderDate ? new Date(order.orderDate).toLocaleDateString(): '' %>
+          </div>
+          <div class="order-status
+          <% if (order.status === 'pending') { %> status-pending <% } %>
+          <% if (order.status === 'shipped') { %> status-shipped <% } %>
+          <% if (order.status === 'delivered') { %> status-delivered <% } %>
+            <% if (order.status === 'cancelled') { %> status-cancelled <% } %>
+          ">
+            <%= order.status %>
+          </div>
+          </div>
+        <div class="order-items">
+            <% order.items.forEach(function(item) { %>
+                <div class="order-item">
+                    <strong><%= item.product && item.product.name ? item.product.name : 'Product deleted' %></strong> - Qty: <%= item.quantity %>
+                </div>
+            <% }); %>
+        </div>
+        <% /* If you want to show total, you can calculate it here if not stored in DB */ %>
+        <% if (order.total) { %>
+          <div class="order-total">
+            Total: ₹<%= order.total %>
+          </div>
+        <% } %>
+      </div>
+    <% }); %>
+  </div>
+<% } else { %>
+  <p class="empty-orders">No orders found.</p>
+<% } %>
+</body>
+</html>
