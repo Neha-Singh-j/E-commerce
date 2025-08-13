@@ -1,0 +1,37 @@
+<h1 class="mb-4">Order History</h1>
+
+<% if (!orders || orders.length === 0) { %>
+  <div class="alert alert-info">You have no past orders.</div>
+<% } else { %>
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Order ID</th>
+          <th scope="col">Date</th>
+          <th scope="col">Items</th>
+          <th scope="col" class="text-end">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(order => { %>
+          <tr>
+            <td><code><%= order._id %></code></td>
+            <td><%= order.orderDate ? new Date(order.orderDate).toLocaleDateString() : '—' %></td>
+            <td>
+              <ul class="mb-0">
+                <% (order.products || []).forEach(p => { %>
+                  <li>
+                    <%= p.name %> (x<%= p.quantity %>)
+                    <% if (p.price != null) { %> – ₹<%= Number(p.price).toFixed(2) %> each <% } %>
+                  </li>
+                <% }) %>
+              </ul>
+            </td>
+            <td class="text-end fw-semibold">₹<%= Number(order.totalAmount).toFixed(2) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>

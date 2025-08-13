@@ -1,90 +1,80 @@
-const express = require("express");
+require('dotenv').config();
+
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
+const expressLayouts = require('express-ejs-layouts');
+
+const productRoutes = require('./routes/productRoutes');
+const reviewRoutes = require('./routes/review');
+const authRoutes = require('./routes/auth');
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/orders');
+const productApi = require('./routes/api/productapi');
+
 const app = express();
-const path = require("path");
-const mongoose = require("mongoose");
-const seedDB = require("./seed");
-const methodOverride = require("method-override");
-const session = require("express-session");
-const flash = require("connect-flash");
-const productRoutes = require("./routes/productRoutes");
-const reviewRoutes = require("./routes/review");
-const authRoutes = require("./routes/auth");
-const cartRoutes = require("./routes/cart");
-const productApi = require("./routes/api/productapi"); //api
-const passport = require("passport"); //pass
-const LocalStrategy = require("passport-local"); //pass
-const User = require("./models/User"); //pass
-require("dotenv").config(); // Make sure this is at the top
 
-mongoose.set("strictQuery", true);
-
+/* ---------- DB ---------- */
+mongoose.set('strictQuery', true);
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("✅ MongoDB connected successfully");
-  })
-  .catch((err) => {
-    console.error("❌ MongoDB connection error:", err);
-  });
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('✅ MongoDB Connected'))
+  .catch((err) => console.error('❌ DB Connection Error:', err));
 
+/* ---------- View Engine + Layouts ---------- */
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('layout', 'layouts/boilerplate'); // uses views/layouts/boilerplate.ejs
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-// now for public folder
-app.use(express.static(path.join(__dirname, "public")));
-
+/* ---------- Middleware ---------- */
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
 app.use(express.json());
+app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// seeding dummy data
-// seedDB();
-
-let configSession = {
-  secret: process.env.SECRET || "keyboard cat",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true,
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  },
-};
-
-app.use(session(configSession));
+/* ---------- Session / Flash ---------- */
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'keyboard cat',
+    resave: false,
+    saveUninitialized: false, // better security defaults
+    cookie: {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+  })
+);
 app.use(flash());
 
-// use static serialize and deserialize of model for passport session support
-app.use(passport.initialize()); //pass
-app.use(passport.session()); //pass
-passport.serializeUser(User.serializeUser()); //pass
-passport.deserializeUser(User.deserializeUser()); //pass
+/* ---------- Passport ---------- */
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
-// use static authenticate method of model in LocalStrategy
-passport.use(new LocalStrategy(User.authenticate())); //pass
-
+/* ---------- Locals (available in all EJS) ---------- */
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user || null;   // used by navbar.ejs
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
-// Routes
+/* ---------- Routes ---------- */
+app.get('/', (req, res) => res.render('home', { title: 'Home' }));
+app.use('/orders', orderRoutes);
 app.use(productRoutes);
 app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(productApi);
 
-const port = 8080;
-app.listen(port, () => {
-  console.log(`server connected at port : ${port}`);
-});
+/* ---------- Server ---------- */
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`🚀 Server started on port ${PORT}`));
