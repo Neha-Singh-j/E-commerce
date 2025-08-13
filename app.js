@@ -41,7 +41,7 @@ app.use(methodOverride("_method"));
 app.use(express.json());
 
 // seeding dummy data
-// seedDB();
+seedDB();
 
 let configSession = {
   secret: process.env.SECRET || "keyboard cat",

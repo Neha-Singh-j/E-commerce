@@ -17,9 +17,20 @@
           
           <div class="d-flex flex-wrap gap-3">
             <a href="#" class="btn btn-success px-4 py-2 fw-bold">Buy Now</a>
-            <form action="/user/<%=foundProduct._id%>/add" method="POST">
-              <button class="btn btn-primary px-4 py-2 fw-bold">Add to Cart</button>
-            </form>
+            <% if (quantityInCart > 0) { %>
+              <form action="/user/<%= foundProduct._id %>/delete" method="POST" class="d-inline">
+                <button class="btn btn-outline-secondary">-</button>
+              </form>
+              <span class="mx-2 fw-bold"><%= quantityInCart %></span>
+              <form action="/user/<%= foundProduct._id %>/add" method="POST" class="d-inline">
+                <button class="btn btn-outline-secondary">+</button>
+              </form>
+            <% } else { %>
+              <form action="/user/<%= foundProduct._id %>/add" method="POST">
+                <button class="btn btn-primary px-4 py-2 fw-bold">Add to Cart</button>
+              </form>
+            <% } %>
+            
             <% if(currentUser && currentUser.role === "seller") { %>
               <a href="/products/<%=foundProduct._id%>/edit" class="btn btn-warning px-4 py-2 fw-bold">Edit</a>
               <form action="/products/<%=foundProduct._id%>?_method=DELETE" method="POST">

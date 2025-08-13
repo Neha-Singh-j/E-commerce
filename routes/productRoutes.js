@@ -4,6 +4,7 @@ const Product = require('../models/Product');
 const router = express.Router();
 const {validateProduct , isLoggedIn, isSeller, isProductAuthor} =  require('../middlewares');
 const Review = require('../models/Review');
+const User = require('../models/User');
 
 // displaying all the products
 router.get('/products' , async(req,res)=>{
@@ -50,7 +51,12 @@ router.get('/products/:id' , isLoggedIn , async(req,res)=>{
         // let foundProduct = await Product.findById(id);
         let foundProduct = await Product.findById(id).populate('reviews');
         // console.log(foundProduct);
-        res.render('products/show' , {foundProduct , msg:req.flash('msg')});
+        let quantityInCart=0;
+        if(req.user){
+            const user=await User.findById(req.user._id);
+            quantityInCart=user.cart.filter(item=>item.toString()===foundProduct._id.toString()).length;
+        }
+        res.render('products/show' , {foundProduct , msg:req.flash('msg'),quantityInCart});
     }
 
     catch(e){
