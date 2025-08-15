@@ -1,48 +1,44 @@
 body {
-    height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      /*url("https://images.unsplash.com/photo-1559521783-1d1599583485?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");*/
-        url("https://images.unsplash.com/photo-1561715276-a2d087060f1d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80");
-    background-size: cover;
-    background-position: center;
-    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
-    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
-  }
-  .cover-container {
-    max-width: 60vw;
-  }
-  
-  .nav-link {
-    padding: 0.25rem 0;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.5);
-    margin-left: 1rem;
-    border-bottom: 0.25rem solid transparent;
-  }
-  
-  .nav-link:hover {
-    color: rgba(255, 255, 255, 0.5);
-    border-bottom-color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .nav-link.active {
-    color: white;
-    border-bottom-color: white;
-  }
-  
-  .btn-secondary,
-  .btn-secondary:hover {
-    color: #333;
-    text-shadow: none;
-  }
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    /*url("https://images.unsplash.com/photo-1559521783-1d1599583485?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");*/
+      url("https://images.unsplash.com/photo-1561715276-a2d087060f1d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80");
+  background-size: cover;
+  background-position: center;
+  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+}
+.cover-container {
+  max-width: 60vw;
+}
 
+.nav-link {
+  padding: 0.25rem 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 1rem;
+  border-bottom: 0.25rem solid transparent;
+}
 
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
 
-  /* reviews css--------------------------------------------------------------- */
+.nav-link.active {
+  color: white;
+  border-bottom-color: white;
+}
 
+.btn-secondary,
+.btn-secondary:hover {
+  color: #333;
+  text-shadow: none;
+}
 
+/* reviews css--------------------------------------------------------------- */
 
-  /* Review Page Styles */
+/* Review Page Styles */
 .product-detail-container {
   max-width: 1200px;
   margin: 2rem auto;
@@ -89,7 +85,8 @@ body {
   border: 2px solid transparent;
 }
 
-.thumbnail:hover, .thumbnail.active {
+.thumbnail:hover,
+.thumbnail.active {
   border-color: var(--primary-orange);
 }
 
@@ -175,7 +172,7 @@ body {
 }
 
 .secondary-btn:hover {
-  background-color: #FFF3E0;
+  background-color: #fff3e0;
 }
 
 /* Reviews Section */
@@ -231,142 +228,131 @@ body {
   line-height: 1.6;
 }
 
-
-
-
-
 /* its home page css--------------------- */
 /* Carousel Styles */
 .carousel {
-    margin-bottom: 4rem;
+  margin-bottom: 4rem;
 }
 
 .carousel-item {
-    height: 70vh;
-    min-height: 400px;
-    background: no-repeat center center;
-    background-size: cover;
+  height: 70vh;
+  min-height: 400px;
+  background: no-repeat center center;
+  background-size: cover;
 }
 
 .carousel-item img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    height: 100%;
-    object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .carousel-caption {
-    bottom: 3rem;
-    z-index: 10;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 2rem;
-    border-radius: 0.5rem;
+  bottom: 3rem;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 0.5rem;
 }
 
 .carousel-caption h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .carousel-caption p {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .carousel-caption .btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
 }
 
 /* Testimonials Styles */
 .testimonials .card {
-    border: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
 }
 
 .testimonials .card:hover {
-    transform: translateY(-10px);
+  transform: translateY(-10px);
 }
 
 .testimonials .card-body {
-    padding: 2rem;
+  padding: 2rem;
 }
 
 .testimonials .card-title {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .testimonials .card-text {
-    font-style: italic;
-    color: #555;
+  font-style: italic;
+  color: #555;
 }
 
-
 .testimonial-card {
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-        }
-        .testimonial-img {
-            border: 3px solid #6a11cb;
-            object-fit: cover;
-        }
-        .testimonial-rating {
-            color: #ffd700;
-            font-size: 1.2rem;
-        }
-        .carousel-caption {
-            background: rgba(106, 17, 203, 0.7);
-            border-radius: 15px;
-            padding: 20px;
-            bottom: 40px;
-        }
-        .carousel-caption h2 {
-            font-family: 'Arial Rounded MT Bold', sans-serif;
-            color: #ffd700;
-        }
-        .carousel-control-prev-icon, 
-        .carousel-control-next-icon {
-            background-color: #6a11cb;
-            border-radius: 50%;
-            padding: 15px;
-        }
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+.testimonial-img {
+  border: 3px solid #6a11cb;
+  object-fit: cover;
+}
+.testimonial-rating {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+.carousel-caption {
+  background: rgba(106, 17, 203, 0.7);
+  border-radius: 15px;
+  padding: 20px;
+  bottom: 40px;
+}
+.carousel-caption h2 {
+  font-family: "Arial Rounded MT Bold", sans-serif;
+  color: #ffd700;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #6a11cb;
+  border-radius: 50%;
+  padding: 15px;
+}
 
+/* Add these styles to your existing style section */
+#homeCarousel {
+  height: 80vh; /* Adjust this value as needed */
+  margin-bottom: 0; /* Remove any default margin */
+}
 
-        
-    /* Add these styles to your existing style section */
-    #homeCarousel {
-        height: 80vh; /* Adjust this value as needed */
-        margin-bottom: 0; /* Remove any default margin */
-    }
-    
-    #homeCarousel .carousel-inner, 
-    #homeCarousel .carousel-item, 
-    #homeCarousel .carousel-item img {
-        height: 100%;
-        object-fit: cover; /* Ensures images cover the space without distortion */
-    }
-    
-    /* Optional: Adjust the caption position if needed */
-    .carousel-caption {
-        bottom: 20%; /* Adjust this to position the caption vertically */
-    }
-    
-    /* Ensure testimonials section starts right after carousel */
-    .testimonials {
-        padding-top: 0;
-    }
-   
+#homeCarousel .carousel-inner,
+#homeCarousel .carousel-item,
+#homeCarousel .carousel-item img {
+  height: 100%;
+  object-fit: cover; /* Ensures images cover the space without distortion */
+}
 
+/* Optional: Adjust the caption position if needed */
+.carousel-caption {
+  bottom: 20%; /* Adjust this to position the caption vertically */
+}
 
-   
+/* Ensure testimonials section starts right after carousel */
+.testimonials {
+  padding-top: 0;
+}

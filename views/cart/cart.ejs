@@ -1,11 +1,18 @@
-<%-include('../partials/header')%>
-<%-include('../partials/navbar')%>
-<%-include('../partials/flash')%>
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
 
 <section class="container py-4" style="margin-top: 80px;">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="display-5 fw-bold gradient-text" style="background: linear-gradient(to right, #6a11cb, #fc4a1a); -webkit-background-clip: text; background-clip: text; color: transparent;">MY CART</h1>
-    <span class="badge rounded-pill px-3 py-2" style="background: linear-gradient(to right, #6a11cb, #fc4a1a); color: white;">
+    <h1 
+      class="display-5 fw-bold gradient-text" 
+      style="background: linear-gradient(to right, #6a11cb, #fc4a1a); 
+             -webkit-background-clip: text; background-clip: text; color: transparent;">
+      MY CART
+    </h1>
+    <span 
+      class="badge rounded-pill px-3 py-2" 
+      style="background: linear-gradient(to right, #6a11cb, #fc4a1a); color: white;">
       <%= user.cart.length %> Items
     </span>
   </div>
@@ -13,28 +20,36 @@
   <div class="row">
     <!-- Cart Items -->
     <div class="col-lg-8">
-      <% for(let item of user.cart){ %>
-      <div class="card mx-auto mb-4 border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img class="img-fluid h-100" src="<%=item.img%>" alt="<%=item.name%>" style="object-fit: cover; min-height: 180px;">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body p-4">
-              <div class="d-flex justify-content-between align-items-start">
-                <h5 class="card-title fw-bold mb-2" style="color: #2c0b5e;"><%=item.name%></h5>
-                <span class="fs-5 fw-bold" style="color: #fc4a1a;">$ <%=item.price%></span>
-              </div>
-              <p class="card-text text-muted mb-3"><%=item.desc%></p>
-              <div class="d-flex justify-content-end">
-                <form action="/user/<%=item._id%>/delete" method="POST">
-                  <button class="btn btn-outline-danger btn-sm">Remove</button>
-                </form>
+      <% for (let item of user.cart) { %>
+        <div class="card mx-auto mb-4 border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img 
+                class="img-fluid h-100" 
+                src="<%= item.img %>" 
+                alt="<%= item.name %>" 
+                style="object-fit: cover; min-height: 180px;">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h5 class="card-title fw-bold mb-2" style="color: #2c0b5e;">
+                    <%= item.name %>
+                  </h5>
+                  <span class="fs-5 fw-bold" style="color: #fc4a1a;">
+                    $ <%= item.price %>
+                  </span>
+                </div>
+                <p class="card-text text-muted mb-3"><%= item.desc %></p>
+                <div class="d-flex justify-content-end">
+                  <form action="/user/<%= item._id %>/delete" method="POST">
+                    <button class="btn btn-outline-danger btn-sm">Remove</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       <% } %>
     </div>
 
@@ -46,21 +61,24 @@
         </div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
-            <% for(let item of user.cart){ %>
-            <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2">
-              <span style="color: #2c0b5e;"><%=item.name%></span>
-              <span class="fw-bold" style="color: #fc4a1a;">$ <%=item.price%></span>
-            </li>
+            <% for (let item of user.cart) { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2">
+                <span style="color: #2c0b5e;"><%= item.name %></span>
+                <span class="fw-bold" style="color: #fc4a1a;">$ <%= item.price %></span>
+              </li>
             <% } %>
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2">
               <span class="fw-bold" style="color: #2c0b5e;">Total Amount</span>
-              <span class="fw-bold fs-5" style="color: #6a11cb;">$ <%=totalAmount%></span>
+              <span class="fw-bold fs-5" style="color: #6a11cb;">$ <%= totalAmount %></span>
             </li>
           </ul>
-          <button class="btn w-100 mt-3 py-2 fw-bold" style="background: linear-gradient(to right, #6a11cb, #fc4a1a); color: white; border: none;">Proceed to Checkout</button>
+          <button 
+            class="btn w-100 mt-3 py-2 fw-bold" 
+            style="background: linear-gradient(to right, #6a11cb, #fc4a1a); color: white; border: none;">
+            Proceed to Checkout
+          </button>
         </div>
       </div>
     </div>
   </div>
 </section>
-

@@ -1,437 +1,339 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Shopiko</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/home.css" />
-    <link rel="stylesheet" href="/css/app.css" />
-  </head>
-  <body>
-    <!-- Bootstrap Carousel -->
-    <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#homeCarousel"
-          data-bs-slide-to="0"
-          class="active"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#homeCarousel"
-          data-bs-slide-to="1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#homeCarousel"
-          data-bs-slide-to="2"
-        ></button>
+<!-- Carousel -->
+<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#homeCarousel"
+      data-bs-slide-to="0"
+      class="active"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#homeCarousel"
+      data-bs-slide-to="1"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#homeCarousel"
+      data-bs-slide-to="2"
+    ></button>
+  </div>
+
+  <div class="carousel-inner">
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <img src="/assests/c1.png" class="d-block w-100" alt="Tech Products" />
+      <div class="carousel-caption d-none d-md-block">
+        <h2>Premium Tech Products</h2>
+        <p>
+          Discover the latest in technology with our curated collection of
+          gadgets and devices.
+        </p>
+        <a
+          href="/products"
+          class="btn"
+          style="background: #ffd700; color: #2c0b5e; font-weight: 600"
+          >Shop Now</a
+        >
       </div>
-
-      <div class="carousel-inner">
-        <!-- Slide 1 -->
-        <div class="carousel-item active">
-          <img
-            src="/assests/c1.png"
-            class="d-block w-100"
-            alt="Tech Products"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h2>Premium Tech Products</h2>
-            <p>
-              Discover the latest in technology with our curated collection of
-              gadgets and devices.
-            </p>
-            <a
-              href="/products"
-              class="btn"
-              style="background: #ffd700; color: #2c0b5e; font-weight: 600"
-              >Shop Now</a
-            >
-          </div>
-        </div>
-
-        <!-- Slide 2 -->
-        <div class="carousel-item">
-          <img
-            src="/assests/c2.png"
-            class="d-block w-100"
-            alt="Special Offers"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h2>Exclusive Discounts</h2>
-            <p>
-              Limited time offers on our most popular products. Don't miss out!
-            </p>
-            <a
-              href="/products?discount=true"
-              class="btn"
-              style="background: #ffd700; color: #2c0b5e; font-weight: 600"
-              >View Deals</a
-            >
-          </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="carousel-item">
-          <img src="/assests/c3.png" class="d-block w-100" alt="New Arrivals" />
-          <div class="carousel-caption d-none d-md-block">
-            <h2>New Arrivals</h2>
-            <p>Be the first to experience our newest products.</p>
-            <a
-              href="/products?new=true"
-              class="btn"
-              style="background: #ffd700; color: #2c0b5e; font-weight: 600"
-              >Explore</a
-            >
-          </div>
-        </div>
-      </div>
-
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#homeCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#homeCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
 
-    <!-- Categories Section -->
-    <section class="categories-section py-5" style="background: #f8f9fa">
-      <div class="container">
-        <h2
-          class="text-center mb-5"
-          style="
-            color: #6a11cb;
-            font-family: 'Arial Rounded MT Bold', sans-serif;
-          "
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <img src="/assests/c2.png" class="d-block w-100" alt="Special Offers" />
+      <div class="carousel-caption d-none d-md-block">
+        <h2>Exclusive Discounts</h2>
+        <p>Limited time offers on our most popular products. Don't miss out!</p>
+        <a
+          href="/products?discount=true"
+          class="btn"
+          style="background: #ffd700; color: #2c0b5e; font-weight: 600"
+          >View Deals</a
         >
-          Shop By Category
-        </h2>
-
-        <div class="row g-4">
-          <!-- Ethnic Wear -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #f3e5ff">
-                <i class="fas fa-tshirt" style="color: #6a11cb"></i>
-              </div>
-              <h5 class="category-title">Ethnic Wear</h5>
-            </div>
-          </div>
-
-          <!-- Western Dresses -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #ffe5e5">
-                <i class="fas fa-vest" style="color: #fc4a1a"></i>
-              </div>
-              <h5 class="category-title">Western Dresses</h5>
-            </div>
-          </div>
-
-          <!-- Menswear -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #e5f0ff">
-                <i class="fas fa-male" style="color: #2c7be5"></i>
-              </div>
-              <h5 class="category-title">Menswear</h5>
-            </div>
-          </div>
-
-          <!-- Footwear -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #fff2e5">
-                <i class="fas fa-shoe-prints" style="color: #ff7b25"></i>
-              </div>
-              <h5 class="category-title">Footwear</h5>
-            </div>
-          </div>
-
-          <!-- Home Decor -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #e5ffe7">
-                <i class="fas fa-home" style="color: #00b159"></i>
-              </div>
-              <h5 class="category-title">Home Decor</h5>
-            </div>
-          </div>
-
-          <!-- Beauty -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #ffe5f7">
-                <i class="fas fa-spa" style="color: #e83e8c"></i>
-              </div>
-              <h5 class="category-title">Beauty</h5>
-            </div>
-          </div>
-
-          <!-- Accessories -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #e5f9ff">
-                <i class="fas fa-rings" style="color: #17a2b8"></i>
-              </div>
-              <h5 class="category-title">Accessories</h5>
-            </div>
-          </div>
-
-          <!-- Grocery -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="category-card">
-              <div class="category-icon" style="background-color: #fff8e5">
-                <i class="fas fa-shopping-basket" style="color: #ffc107"></i>
-              </div>
-              <h5 class="category-title">Grocery</h5>
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Moving Brands Section -->
-    <section
-      class="brands-section py-4"
-      style="background: linear-gradient(to right, #6a11cb 0%, #fc4a1a 100%)"
-    >
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h3 class="text-white mb-0">Original Brands</h3>
-        </div>
-
-        <!-- Moving Brand Logos -->
-        <div class="brands-slider">
-          <div class="brands-track">
-            <!-- Brand 1 -->
-            <div class="brand-logo">
-              <img src="/assests/bata.png" alt="Bata" class="img-fluid" />
-              <p class="text-white mt-2 mb-0">Bata</p>
-            </div>
-            <!-- Brand 2 -->
-            <div class="brand-logo">
-              <img src="/assests/nivea.png" alt="Nivea" class="img-fluid" />
-              <p class="text-white mt-2 mb-0">Nivea</p>
-            </div>
-            <!-- Brand 3 -->
-            <div class="brand-logo">
-              <img
-                src="/assests/himalaya.png"
-                alt="Himalaya"
-                class="img-fluid"
-              />
-              <p class="text-white mt-2 mb-0">Himalaya</p>
-            </div>
-            <!-- Brand 4 -->
-            <div class="brand-logo">
-              <img src="/assests/mi.png" alt="MI" class="img-fluid" />
-              <p class="text-white mt-2 mb-0">MI</p>
-            </div>
-            <!-- Brand 5 -->
-            <div class="brand-logo">
-              <img
-                src="/assests/wildstone.png"
-                alt="Wildstone"
-                class="img-fluid"
-              />
-              <p class="text-white mt-2 mb-0">Wildstone</p>
-            </div>
-            <!-- Brand 6 -->
-            <div class="brand-logo">
-              <img
-                src="/assests/mamaearth.png"
-                alt="Mamaearth"
-                class="img-fluid"
-              />
-              <p class="text-white mt-2 mb-0">Mamaearth</p>
-            </div>
-            <!-- Brand 7 -->
-            <div class="brand-logo">
-              <img src="/assests/plum.png" alt="Plum" class="img-fluid" />
-              <p class="text-white mt-2 mb-0">Plum</p>
-            </div>
-            <!-- Brand 8 -->
-            <div class="brand-logo">
-              <img src="/assests/oppo.png" alt="Oppo" class="img-fluid" />
-              <p class="text-white mt-2 mb-0">Oppo</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <script>
-      // Pause animation on hover
-      document
-        .querySelector(".brands-track")
-        .addEventListener("mouseenter", () => {
-          document.querySelector(".brands-track").style.animationPlayState =
-            "paused";
-        });
-
-      document
-        .querySelector(".brands-track")
-        .addEventListener("mouseleave", () => {
-          document.querySelector(".brands-track").style.animationPlayState =
-            "running";
-        });
-    </script>
-
-    <!-- Testimonials Section -->
-    <section
-      class="testimonials py-5"
-      style="background: linear-gradient(to right, #f9f9f9 0%, #ffffff 100%)"
-    >
-      <div class="container">
-        <h2
-          class="text-center mb-5"
-          style="
-            font-family: 'Arial Rounded MT Bold', sans-serif;
-            color: #6a11cb;
-          "
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <img src="/assests/c3.png" class="d-block w-100" alt="New Arrivals" />
+      <div class="carousel-caption d-none d-md-block">
+        <h2>New Arrivals</h2>
+        <p>Be the first to experience our newest products.</p>
+        <a
+          href="/products?new=true"
+          class="btn"
+          style="background: #ffd700; color: #2c0b5e; font-weight: 600"
+          >Explore</a
         >
-          What Our Customers Say
-        </h2>
+      </div>
+    </div>
+  </div>
 
-        <div class="row">
-          <!-- Testimonial 1 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 testimonial-card">
-              <div class="card-body text-center py-4">
-                <img
-                  src="/assests/user1.png"
-                  class="rounded-circle mb-3 testimonial-img"
-                  width="100"
-                  height="100"
-                  alt="Customer"
-                />
-                <h5 class="card-title" style="color: #6a11cb">Rahul Sharma</h5>
-                <div class="testimonial-rating mb-2">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p class="card-text px-3">
-                  "The iPad I purchased was exactly as described and arrived
-                  sooner than expected. Excellent service!"
-                </p>
-              </div>
-            </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#homeCarousel"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#homeCarousel"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<!-- Categories Section -->
+<section class="categories-section py-5" style="background: #f8f9fa">
+  <div class="container">
+    <h2
+      class="text-center mb-5"
+      style="color: #6a11cb; font-family: 'Arial Rounded MT Bold', sans-serif"
+    >
+      Shop By Category
+    </h2>
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #f3e5ff">
+            <i class="fas fa-tshirt" style="color: #6a11cb"></i>
           </div>
+          <h5 class="category-title">Ethnic Wear</h5>
+        </div>
+      </div>
 
-          <!-- Testimonial 2 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 testimonial-card">
-              <div class="card-body text-center py-4">
-                <img
-                  src="/assests/user2.png"
-                  class="rounded-circle mb-3 testimonial-img"
-                  width="100"
-                  height="100"
-                  alt="Customer"
-                />
-                <h5 class="card-title" style="color: #6a11cb">Priya Patel</h5>
-                <div class="testimonial-rating mb-2">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p class="card-text px-3">
-                  "Great prices and fast shipping. The iPhone I bought works
-                  perfectly and was brand new as promised."
-                </p>
-              </div>
-            </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #ffe5e5">
+            <i class="fas fa-vest" style="color: #fc4a1a"></i>
           </div>
+          <h5 class="category-title">Western Dresses</h5>
+        </div>
+      </div>
 
-          <!-- Testimonial 3 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 testimonial-card">
-              <div class="card-body text-center py-4">
-                <img
-                  src="/assests/user3.png"
-                  class="rounded-circle mb-3 testimonial-img"
-                  width="100"
-                  height="100"
-                  alt="Customer"
-                />
-                <h5 class="card-title" style="color: #6a11cb">Amrita Singh</h5>
-                <div class="testimonial-rating mb-2">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="far fa-star"></i>
-                </div>
-                <p class="card-text px-3">
-                  "Good selection of products. Would love to see more
-                  accessories available in the future."
-                </p>
-              </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #e5f0ff">
+            <i class="fas fa-male" style="color: #2c7be5"></i>
+          </div>
+          <h5 class="category-title">Menswear</h5>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #fff2e5">
+            <i class="fas fa-shoe-prints" style="color: #ff7b25"></i>
+          </div>
+          <h5 class="category-title">Footwear</h5>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #e5ffe7">
+            <i class="fas fa-home" style="color: #00b159"></i>
+          </div>
+          <h5 class="category-title">Home Decor</h5>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #ffe5f7">
+            <i class="fas fa-spa" style="color: #e83e8c"></i>
+          </div>
+          <h5 class="category-title">Beauty</h5>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #e5f9ff">
+            <i class="fas fa-rings" style="color: #17a2b8"></i>
+          </div>
+          <h5 class="category-title">Accessories</h5>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="category-card">
+          <div class="category-icon" style="background-color: #fff8e5">
+            <i class="fas fa-shopping-basket" style="color: #ffc107"></i>
+          </div>
+          <h5 class="category-title">Grocery</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Brands Section -->
+<section
+  class="brands-section py-4"
+  style="background: linear-gradient(to right, #6a11cb 0%, #fc4a1a 100%)"
+>
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="text-white mb-0">Original Brands</h3>
+    </div>
+    <div class="brands-slider">
+      <div class="brands-track">
+        <div class="brand-logo">
+          <img src="/assests/bata.png" alt="Bata" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">Bata</p>
+        </div>
+        <div class="brand-logo">
+          <img src="/assests/nivea.png" alt="Nivea" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">Nivea</p>
+        </div>
+        <div class="brand-logo">
+          <img src="/assests/himalaya.png" alt="Himalaya" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">Himalaya</p>
+        </div>
+        <div class="brand-logo">
+          <img src="/assests/mi.png" alt="MI" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">MI</p>
+        </div>
+        <div class="brand-logo">
+          <img src="/assests/wildstone.png" alt="Wildstone" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">Wildstone</p>
+        </div>
+        <div class="brand-logo">
+          <img src="/assests/mamaearth.png" alt="Mamaearth" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">Mamaearth</p>
+        </div>
+        <div class="brand-logo">
+          <img src="/assests/plum.png" alt="Plum" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">Plum</p>
+        </div>
+        <div class="brand-logo">
+          <img src="/assests/oppo.png" alt="Oppo" class="img-fluid" />
+          <p class="text-white mt-2 mb-0">Oppo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelector(".brands-track").addEventListener("mouseenter", () => {
+    document.querySelector(".brands-track").style.animationPlayState = "paused";
+  });
+  document.querySelector(".brands-track").addEventListener("mouseleave", () => {
+    document.querySelector(".brands-track").style.animationPlayState =
+      "running";
+  });
+</script>
+
+<!-- Testimonials Section -->
+<section
+  class="testimonials py-5"
+  style="background: linear-gradient(to right, #f9f9f9 0%, #ffffff 100%)"
+>
+  <div class="container">
+    <h2
+      class="text-center mb-5"
+      style="font-family: 'Arial Rounded MT Bold', sans-serif; color: #6a11cb"
+    >
+      What Our Customers Say
+    </h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 testimonial-card">
+          <div class="card-body text-center py-4">
+            <img
+              src="/assests/user1.png"
+              class="rounded-circle mb-3 testimonial-img"
+              width="100"
+              height="100"
+              alt="Customer"
+            />
+            <h5 class="card-title" style="color: #6a11cb">Rahul Sharma</h5>
+            <div class="testimonial-rating mb-2">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i
+              ><i class="fas fa-star"></i><i class="fas fa-star"></i
+              ><i class="fas fa-star"></i>
             </div>
+            <p class="card-text px-3">
+              "The iPad I purchased was exactly as described and arrived sooner
+              than expected. Excellent service!"
+            </p>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="/js/common.js"></script>
-  </body>
-</html>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 testimonial-card">
+          <div class="card-body text-center py-4">
+            <img
+              src="/assests/user2.png"
+              class="rounded-circle mb-3 testimonial-img"
+              width="100"
+              height="100"
+              alt="Customer"
+            />
+            <h5 class="card-title" style="color: #6a11cb">Priya Patel</h5>
+            <div class="testimonial-rating mb-2">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i
+              ><i class="fas fa-star"></i><i class="fas fa-star"></i
+              ><i class="fas fa-star"></i>
+            </div>
+            <p class="card-text px-3">
+              "Great prices and fast shipping. The iPhone I bought works
+              perfectly and was brand new as promised."
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 testimonial-card">
+          <div class="card-body text-center py-4">
+            <img
+              src="/assests/user3.png"
+              class="rounded-circle mb-3 testimonial-img"
+              width="100"
+              height="100"
+              alt="Customer"
+            />
+            <h5 class="card-title" style="color: #6a11cb">Amrita Singh</h5>
+            <div class="testimonial-rating mb-2">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i
+              ><i class="fas fa-star"></i><i class="fas fa-star"></i
+              ><i class="far fa-star"></i>
+            </div>
+            <p class="card-text px-3">
+              "Good selection of products. Would love to see more accessories
+              available in the future."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <style>
-  /* Brands Section Styles */
   .brands-section {
     overflow: hidden;
     position: relative;
   }
-
   .brands-slider {
     width: 100%;
     overflow: hidden;
     position: relative;
   }
-
   .brands-track {
     display: flex;
     gap: 30px;
     animation: scroll 20s linear infinite;
     width: calc(250px * 16);
   }
-
   .brand-logo {
     flex: 0 0 200px;
     text-align: center;
@@ -440,19 +342,15 @@
     border-radius: 10px;
     padding: 15px;
   }
-
   .brand-logo:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.2);
   }
-
   .brand-logo img {
     height: 80px;
     width: auto;
     object-fit: contain;
-    /* Removed all filters to show original colors */
   }
-
   @keyframes scroll {
     0% {
       transform: translateX(0);
@@ -461,22 +359,17 @@
       transform: translateX(calc(-250px * 8));
     }
   }
-
-  /* Responsive adjustments */
   @media (max-width: 768px) {
     .brand-logo {
       flex: 0 0 150px;
     }
-
     .brand-logo img {
       height: 60px;
     }
   }
-
   .categories-section {
     padding: 60px 0;
   }
-
   .category-card {
     background: white;
     border-radius: 15px;
@@ -486,12 +379,10 @@
     transition: all 0.3s ease;
     height: 100%;
   }
-
   .category-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   }
-
   .category-icon {
     width: 80px;
     height: 80px;
@@ -502,32 +393,26 @@
     margin: 0 auto 15px;
     transition: all 0.3s ease;
   }
-
   .category-card:hover .category-icon {
     transform: scale(1.1);
   }
-
   .category-icon i {
     font-size: 2rem;
   }
-
   .category-title {
     color: #333;
     font-weight: 600;
     margin-bottom: 0;
     transition: color 0.3s ease;
   }
-
   .category-card:hover .category-title {
     color: #6a11cb;
   }
-
   @media (max-width: 768px) {
     .category-icon {
       width: 60px;
       height: 60px;
     }
-
     .category-icon i {
       font-size: 1.5rem;
     }

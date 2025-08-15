@@ -1,38 +1,71 @@
 <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
-                <div class="card-header py-3" style="background: linear-gradient(to right, #6a11cb 0%, #fc4a1a 100%);">
-                    <h2 class="text-center text-white mb-0" style="font-family: 'Arial Rounded MT Bold', sans-serif;">Welcome Back!</h2>
-                </div>
-                <div class="card-body p-4">
-                    <form action="/login" method="POST">
-                        <div class="mb-4">
-                            <label for="username" class="form-label fw-semibold">Username</label>
-                            <input type="text" class="form-control py-2" name="username" id="username" placeholder="Enter your username" required
-                                   style="border-radius: 8px; border: 1px solid #ddd; padding-left: 15px;">
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="form-label fw-semibold">Password</label>
-                            <input type="password" class="form-control py-2" name="password" id="password" placeholder="Enter your password" required
-                                   style="border-radius: 8px; border: 1px solid #ddd; padding-left: 15px;">
-                        </div>
-                        <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-lg text-white fw-bold py-2" 
-                                    style="background: linear-gradient(to right, #6a11cb 0%, #fc4a1a 100%); border-radius: 8px; border: none;">
-                                Login
-                            </button>
-                        </div>
-                        <div class="text-center pt-2">
-                            <p class="mb-0" style="color: #666;">Don't have an account? 
-                                <a href="/register" style="color: #fc4a1a; text-decoration: none; font-weight: 600;">Sign up now</a>
-                            </p>
-                        </div>
-                    </form>
-                </div>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+
+        <!-- Header -->
+        <div class="card-header py-3" style="background: linear-gradient(to right, #6a11cb 0%, #fc4a1a 100%);">
+          <h2 class="text-center text-white mb-0" style="font-family: 'Arial Rounded MT Bold', sans-serif;">
+            Welcome Back!
+          </h2>
         </div>
+
+        <!-- Login Form -->
+        <div class="card-body p-4">
+          <form action="/login" method="POST">
+
+            <!-- Username Input -->
+            <div class="mb-4">
+              <label for="username" class="form-label fw-semibold">Username</label>
+              <input 
+                type="text" 
+                class="form-control py-2" 
+                name="username" 
+                id="username" 
+                placeholder="Enter your username" 
+                required
+                style="border-radius: 8px; border: 1px solid #ddd; padding-left: 15px;">
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-4">
+              <label for="password" class="form-label fw-semibold">Password</label>
+              <input 
+                type="password" 
+                class="form-control py-2" 
+                name="password" 
+                id="password" 
+                placeholder="Enter your password" 
+                required
+                style="border-radius: 8px; border: 1px solid #ddd; padding-left: 15px;">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid mb-3">
+              <button 
+                type="submit" 
+                class="btn btn-lg text-white fw-bold py-2" 
+                style="background: linear-gradient(to right, #6a11cb 0%, #fc4a1a 100%); border-radius: 8px; border: none;">
+                Login
+              </button>
+            </div>
+
+            <!-- Signup Link -->
+            <div class="text-center pt-2">
+              <p class="mb-0" style="color: #666;">
+                Don't have an account? 
+                <a href="/register" style="color: #fc4a1a; text-decoration: none; font-weight: 600;">
+                  Sign up now
+                </a>
+              </p>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
     </div>
+  </div>
 </div>
 
 <script src="/js/script.js"></script>
