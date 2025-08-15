@@ -16,29 +16,28 @@
         <li class="nav-item">
           <a class="nav-link text-white px-3" href="/products" style="font-family: 'Arial', sans-serif;">Products</a>
         </li>
-        <%if(currentUser && currentUser.role === 'seller'){%>
+        <% if (currentUser && currentUser.role === 'seller') { %>
         <li class="nav-item">
           <a class="nav-link text-white px-3" href="/products/new" style="font-family: 'Arial', sans-serif;">New Product</a>
         </li>
-        <%}%>
+        <% } %>
       </ul>
       
       <div class="navbar-nav ms-auto">
-        <%if(!currentUser){%>
+        <% if (!currentUser) { %>
           <a href="/login" class="nav-link text-white px-3 fw-semibold" style="font-family: 'Arial', sans-serif;">Login</a> 
           <a href="/register" class="nav-link px-3 fw-semibold" style="color: #ffd700; font-family: 'Arial', sans-serif;">Register</a>
-        <%} else{%>
-          <span class="nav-link text-white px-3 text-capitalize" style="font-family: 'Arial', sans-serif;">👋 Hello <%=currentUser.username%></span>
-          <!-- New link for Order History page -->
+        <% } else { %>
+          <span class="nav-link text-white px-3 text-capitalize" style="font-family: 'Arial', sans-serif;">👋 Hello <%= currentUser.username %></span>
           <a href="/orders/history" class="nav-link text-white px-3 fw-semibold" style="font-family: 'Arial', sans-serif;">Order History</a>
           <a href="/user/cart" class="nav-link text-white px-3 position-relative">
             <i class="fas fa-cart-shopping fs-5" style="color: #ffd700;"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #ffd700; color: #2c0b5e; font-family: 'Arial', sans-serif;">
-              <%=currentUser.cart.length%>
+              <%= currentUser.cart.length %>
             </span>
           </a>
           <a href="/logout" class="nav-link px-3 fw-semibold" style="color: #ffd700; font-family: 'Arial', sans-serif;">Logout</a>
-        <%}%>
+        <% } %>
       </div>
     </div>
   </div> 

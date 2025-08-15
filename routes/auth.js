@@ -11,7 +11,7 @@ router.post("/register", async (req, res) => {
   let { username, password, email, role, gender } = req.body;
   let user = new User({ username, email, gender, role });
   let newUser = await User.register(user, password);
-  // res.send(newUser);
+  req.flash('success', 'Account created successfully!');
   res.redirect("/login");
 });
 
@@ -23,18 +23,11 @@ router.post(
   "/login",
   passport.authenticate("local", {
     failureRedirect: "/login",
-    failureMessage: true,
+    failureFlash: true, // Use this for flash messages on failure
   }),
   function (req, res) {
-    try{
-      // console.log(req.user.username, "User");
-      req.flash("success", `Welcome Back ${req.user.username}`);
-      // res.json(`Welcome Back ${req.user.username}`);
-      res.redirect("/products");
-    }
-    catch(error){
-      res.json(error);
-    }
+    req.flash("success", `Welcome Back ${req.user.username}`);
+    res.redirect("/products");
   }
 );
 
