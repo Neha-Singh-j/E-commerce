@@ -21,7 +21,7 @@ router.post("/user/:productId/add", isLoggedIn, async (req, res) => {
   let product = await Product.findById(productId);
   user.cart.push(product);
   await user.save();
-  res.redirect("/user/cart");
+  res.redirect(`/products/${productId}`);
 });
 
 router.post("/user/:productId/delete", isLoggedIn, async (req, res) => {
@@ -42,13 +42,14 @@ router.post("/user/:productId/delete", isLoggedIn, async (req, res) => {
       }
 
       await user.save();
-      res.redirect("/user/cart");
+      res.redirect(`/products/${productId}`);
     } catch (err) {
       console.error("Error removing product from cart:", err);
       res.status(500).send("Something went wrong");
     }
 
 });
+
 
 
 
