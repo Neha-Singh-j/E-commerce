@@ -1,94 +1,74 @@
-<div class="container py-5" style="margin-top: 80px;">
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10">
-      <div class="card border-0 shadow" style="border-radius: 15px; overflow: hidden;">
-        
-        <!-- Header -->
-        <div class="card-header py-3" style="background: linear-gradient(to right, #6a11cb, #fc4a1a);">
-          <h3 class="text-white mb-0 text-center">Add New Product</h3>
-        </div>
-        
-        <!-- Form -->
-        <div class="card-body p-4">
-          <form action="/products" method="POST" class="needs-validation" novalidate>
-            
-            <!-- Product Name -->
-            <div class="mb-4">
-              <label for="naam" class="form-label fw-bold" style="color: #6a11cb;">Name:</label>
-              <input 
-                type="text" 
-                class="form-control py-2" 
-                name="name" 
-                id="naam" 
-                placeholder="Name of Product" 
-                required 
-                style="border-color: #d1d1d1;">
-              <div class="valid-feedback">Looks good!</div>
-              <div class="invalid-feedback" style="color: #fc4a1a;">Please provide a valid product name.</div>
-            </div>
-            
-            <!-- Image URL -->
-            <div class="mb-4">
-              <label for="imge" class="form-label fw-bold" style="color: #6a11cb;">Image URL:</label>
-              <input 
-                type="text" 
-                class="form-control py-2" 
-                name="img" 
-                id="imge" 
-                placeholder="Image URL of Product" 
-                required 
-                style="border-color: #d1d1d1;">
-              <div class="valid-feedback">Looks good!</div>
-              <div class="invalid-feedback" style="color: #fc4a1a;">Please provide a valid image URL.</div>
-            </div>
-            
-            <!-- Price -->
-            <div class="mb-4">
-              <label for="paisa" class="form-label fw-bold" style="color: #6a11cb;">Price:</label>
-              <div class="input-group">
-                <span class="input-group-text py-2" style="background-color: #f3e5ff; color: #6a11cb; font-weight: 600;">Rs.</span>
-                <input 
-                  class="form-control py-2" 
-                  type="number" 
-                  name="price" 
-                  id="paisa" 
-                  step="any" 
-                  placeholder="Price of Product" 
-                  required 
-                  style="border-color: #d1d1d1;">
-                <div class="valid-feedback">Looks good!</div>
-                <div class="invalid-feedback" style="color: #fc4a1a;">Please provide a valid price.</div>
-              </div>
-            </div>
-            
-            <!-- Description -->
-            <div class="mb-4">
-              <label for="des" class="form-label fw-bold" style="color: #6a11cb;">Description:</label>
-              <textarea 
-                class="form-control py-2" 
-                name="desc" 
-                id="des" 
-                rows="5" 
-                placeholder="Description of Product" 
-                required 
-                style="border-color: #d1d1d1;"></textarea>
-              <div class="valid-feedback">Looks good!</div>
-              <div class="invalid-feedback" style="color: #fc4a1a;">Please provide a valid description.</div>
-            </div>
-            
-            <!-- Submit -->
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-              <button 
-                type="submit" 
-                class="btn px-4 py-2 fw-bold" 
-                style="background: linear-gradient(to right, #6a11cb, #fc4a1a); color: white; border: none;">
-                Add Product
-              </button>
-            </div>
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
 
-          </form>
+<div class="container mt-5 pt-4">
+  <div class="row g-4">
+    <!-- Product Card Column -->
+    <div class="col-lg-6 col-md-12">
+      <div class="card shadow-lg border-0" style="border-radius: 15px; border-top: 5px solid #6a11cb;">
+        <div class="text-center p-3">
+          <img src="<%= foundProduct.img %>" class="img-fluid rounded-3" style="max-height: 350px; object-fit: contain;" alt="<%= foundProduct.name %>">
         </div>
+        <div class="card-body">
+          <h3 class="card-title text-center fw-bold text-primary"><%= foundProduct.name %></h3>
+          <h5 class="text-success fw-bold my-3">Rs: <%= foundProduct.price %></h5>
+          <p class="card-text mb-4 text-muted"><%= foundProduct.desc %></p>
 
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#" class="btn btn-success px-4 py-2 fw-bold">Buy Now</a>
+            <% if (quantityInCart > 0) { %>
+              <form action="/user/<%= foundProduct._id %>/delete" method="POST" class="d-inline">
+                <button class="btn btn-outline-secondary">-</button>
+              </form>
+              <span class="mx-2 fw-bold"><%= quantityInCart %></span>
+              <form action="/user/<%= foundProduct._id %>/add" method="POST" class="d-inline">
+                <button class="btn btn-outline-secondary">+</button>
+              </form>
+            <% } else { %>
+              <form action="/user/<%= foundProduct._id %>/add" method="POST">
+                <button class="btn btn-primary px-4 py-2 fw-bold">Add to Cart</button>
+              </form>
+            <% } %>
+
+            <% if (currentUser && currentUser.role === "seller") { %>
+              <a href="/products/<%= foundProduct._id %>/edit" class="btn btn-warning px-4 py-2 fw-bold">Edit</a>
+              <form action="/products/<%= foundProduct._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger px-4 py-2 fw-bold">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Column -->
+    <div class="col-lg-6 col-md-12">
+      <div class="card shadow-lg border-0 mb-4" style="border-radius: 15px; border-top: 5px solid #fc4a1a;">
+        <div class="card-header bg-gradient-primary-orange text-white py-3" style="border-radius: 15px 15px 0 0;">
+          <h4 class="mb-0 fw-bold"><i class="fas fa-comments me-2"></i>Customer Reviews</h4>
+        </div>
+        <div class="card-body">
+          <!-- Place your review rendering EJS logic here, for example: -->
+          <% if (foundProduct.reviews && foundProduct.reviews.length > 0) { %>
+            <ul class="list-unstyled mb-0">
+              <% foundProduct.reviews.forEach(review => { %>
+                <li class="mb-3">
+                  <strong><%= review.user %></strong>
+                  <span class="text-warning ms-2">
+                    <% for (let i = 0; i < review.rating; i++) { %>
+                      <i class="fas fa-star"></i>
+                    <% } %>
+                  </span>
+                  <p class="mb-1"><%= review.comment %></p>
+                  <small class="text-muted"><%= new Date(review.date).toLocaleDateString() %></small>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <div class="alert alert-info">No reviews yet for this product.</div>
+          <% } %>
+        </div>
       </div>
     </div>
   </div>
