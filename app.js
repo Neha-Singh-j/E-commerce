@@ -13,6 +13,8 @@ const cartRoutes = require("./routes/cart");
 const productApi = require("./routes/api/productapi"); //api
 const passport = require("passport"); //pass
 const LocalStrategy = require("passport-local"); //pass
+const ordersController = require("./controllers/ordersController"); 
+const orderRoutes = require('./routes/orders');
 const User = require("./models/User"); //pass
 require("dotenv").config(); // Make sure this is at the top
 
@@ -76,15 +78,15 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.render("home");
 });
-
+app.get('/orders', ordersController.getOrders);
 // Routes
 app.use(productRoutes);
 app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(productApi);
-
-const port = 8080;
-app.listen(port, () => {
-  console.log(`server connected at port : ${port}`);
+app.use(orderRoutes);
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`server connected at port : ${PORT}`);
 });
