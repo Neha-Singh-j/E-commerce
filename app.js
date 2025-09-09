@@ -5,8 +5,19 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
+
+const productRoutes = require("./routes/productRoutes");
+const reviewRoutes = require("./routes/review");
+const authRoutes = require("./routes/auth");
+const cartRoutes = require("./routes/cart");
+const productApi = require("./routes/api/productapi"); //api
+const passport = require("passport"); //pass
+const LocalStrategy = require("passport-local"); //pass
+const ordersController = require("./controllers/ordersController"); 
+const orderRoutes = require('./routes/orders');
+const User = require("./models/User"); //pass
+require("dotenv").config(); // Make sure this is at the top
+
 
 // Import configuration and security middleware
 const { config } = require("./config/config");
@@ -60,8 +71,13 @@ try {
 app.set("view engine", "ejs");
 app.set("views", config.paths.views);
 
-// Static files
+
 app.use(express.static(config.paths.public));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(express.json());
+
 
 // Body parsing middleware
 app.use(express.json({ limit: "10mb" }));
@@ -174,6 +190,7 @@ app.get("/test-feedback", (req, res) => {
   });
 });
 
+
 app.get("/feedback", (req, res) => {
   console.log("📍 Direct feedback route accessed");
   try {
@@ -221,3 +238,17 @@ if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
 }
 
 module.exports = app;
+
+app.get('/orders', ordersController.getOrders);
+// Routes
+app.use(productRoutes);
+app.use(reviewRoutes);
+app.use(authRoutes);
+app.use(cartRoutes);
+app.use(productApi);
+app.use(orderRoutes);
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`server connected at port : ${PORT}`);
+});
+
