@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
         min:0,
         required:true
     },
-    istock:{
+    instock:{
         type:Boolean,
         default:true,
     },
