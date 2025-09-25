@@ -1,0 +1,146 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5 pt-5">
+  <div class="row">
+    <div class="col-lg-10 mx-auto">
+      <h1 class="text-center mb-5 fw-bold" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">My Account</h1>
+      
+      <div class="row">
+        <!-- Profile Section -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="card-body p-4 text-center">
+              <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                <i class="fas fa-user fs-1" style="color: #667eea;"></i>
+              </div>
+              <h4 class="text-white mb-2"><%= currentUser ? currentUser.username : 'Guest' %></h4>
+              <p class="text-white-50 mb-3"><%= currentUser ? currentUser.email : 'Not logged in' %></p>
+              <span class="badge bg-light text-dark px-3 py-2"><%= currentUser ? currentUser.role : 'Guest' %></span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Account Options -->
+        <div class="col-lg-8">
+          <div class="row">
+            <!-- Personal Information -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow border-0 h-100">
+                <div class="card-body p-4">
+                  <h5 class="mb-3">
+                    <i class="fas fa-user-edit me-2 text-primary"></i>
+                    Personal Information
+                  </h5>
+                  <ul class="list-unstyled">
+                    <li class="mb-2"><strong>Username:</strong> <%= currentUser ? currentUser.username : 'N/A' %></li>
+                    <li class="mb-2"><strong>Email:</strong> <%= currentUser ? currentUser.email : 'N/A' %></li>
+                    <li class="mb-2"><strong>Gender:</strong> <%= currentUser ? currentUser.gender : 'N/A' %></li>
+                    <li class="mb-2"><strong>Role:</strong> <%= currentUser ? currentUser.role : 'N/A' %></li>
+                  </ul>
+                  <button class="btn btn-outline-primary btn-sm">Edit Profile</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Order History -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow border-0 h-100">
+                <div class="card-body p-4">
+                  <h5 class="mb-3">
+                    <i class="fas fa-shopping-bag me-2 text-success"></i>
+                    Order History
+                  </h5>
+                  <p class="text-muted small mb-3">Track your past orders and their status</p>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Total Orders</span>
+                    <span class="badge bg-primary">0</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Pending</span>
+                    <span class="badge bg-warning">0</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Delivered</span>
+                    <span class="badge bg-success">0</span>
+                  </div>
+                  <button class="btn btn-outline-success btn-sm">View Orders</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Wishlist -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow border-0 h-100">
+                <div class="card-body p-4">
+                  <h5 class="mb-3">
+                    <i class="fas fa-heart me-2 text-danger"></i>
+                    Wishlist
+                  </h5>
+                  <p class="text-muted small mb-3">Your saved items for later purchase</p>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Saved Items</span>
+                    <span class="badge bg-danger"><%= currentUser ? currentUser.wishlist.length : 0 %></span>
+                  </div>
+                  <button class="btn btn-outline-danger btn-sm">View Wishlist</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Cart -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow border-0 h-100">
+                <div class="card-body p-4">
+                  <h5 class="mb-3">
+                    <i class="fas fa-shopping-cart me-2 text-info"></i>
+                    Shopping Cart
+                  </h5>
+                  <p class="text-muted small mb-3">Items in your shopping cart</p>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Cart Items</span>
+                    <span class="badge bg-info"><%= currentUser ? currentUser.cart.length : 0 %></span>
+                  </div>
+                  <a href="/user/cart" class="btn btn-outline-info btn-sm">View Cart</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Account Actions -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card shadow border-0">
+            <div class="card-body p-4">
+              <h5 class="mb-3">Account Actions</h5>
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <button class="btn btn-outline-primary w-100">
+                    <i class="fas fa-key me-2"></i>Change Password
+                  </button>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <button class="btn btn-outline-secondary w-100">
+                    <i class="fas fa-bell me-2"></i>Notifications
+                  </button>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <button class="btn btn-outline-warning w-100">
+                    <i class="fas fa-cog me-2"></i>Settings
+                  </button>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <a href="/logout" class="btn btn-outline-danger w-100">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %> 

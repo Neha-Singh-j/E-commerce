@@ -1,97 +1,264 @@
 
-# 🛍️ **Shopiko** – Full Stack E-Commerce Web App
+# Shopiko E-Commerce Platform
 
-**Shopiko** is a complete and modern **e-commerce platform** designed to provide a smooth online shopping experience — from browsing and cart management to secure checkout. This project mimics all essential real-world e-commerce features, making it ideal for learning full-stack development or showcasing your portfolio.
-
-
-## Live Demo : Click Here 👉 https://shopiko-1.onrender.com
-https://shopiko-1.onrender.com
-
-
----
-
-
-## 📸 Screenshots
-
-**Home Page**
-![Home Page](https://github.com/user-attachments/assets/ad6f0a40-c957-44cf-a486-18de548f03b4)
-
-**Products Page**
-![Products Page](https://github.com/user-attachments/assets/c44215da-0ecc-4050-83b4-ef71d2912ebd)
-
-**Cart Page**
-![Cart Page](https://github.com/user-attachments/assets/789dc700-b421-41cb-baa0-f68bc10e5766)
-
----
+A modern, secure e-commerce platform built with Node.js, Express, MongoDB, and Passport.js.
 
 ## 🚀 Features
 
-* 🔐 **User Authentication** – Sign up & login securely
-* 🛒 **Cart Functionality** – Add/remove items, quantity update
-* 💳 **Payment Gateway Integration** – Stripe or Razorpay
-* 📦 **Order Placement** – Track & manage your orders
-* 🧑‍💼 **Admin Dashboard** – (Optional) Manage products & orders
-* 🧾 **Review System** – Add and view product reviews
-* 📱 **Responsive UI** – Mobile-friendly design
+- **User Authentication**: Secure login/register with Passport.js
+- **Product Management**: CRUD operations for products
+- **Shopping Cart**: Add/remove items from cart
+- **Reviews & Ratings**: Product reviews system
+- **Responsive Design**: Modern UI with EJS templates
+- **Security**: Helmet, CORS, Rate limiting, Input sanitization
+- **Production Ready**: Environment-based configuration
 
----
+## 📋 Prerequisites
 
-## 🛠️ Tech Stack
+- Node.js >= 18.0.0
+- npm >= 8.0.0
+- MongoDB (local or cloud)
 
-### 🌐 Frontend
+## 🛠️ Installation
 
-* HTML, CSS, JavaScript
-* Bootstrap / Tailwind CSS
-* EJS (Embedded JavaScript Templates)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/shopiko.git
+   cd shopiko
+   ```
 
-### 🧠 Backend
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-* Node.js
-* Express.js
-* MongoDB with Mongoose
-* Passport.js (Authentication)
+3. **Environment Setup**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+   
+   # Edit the .env file with your configuration
+   nano .env
+   ```
 
-### 🧰 Other Tools
+4. **Database Setup**
+   ```bash
+   # Start MongoDB (if using local)
+   mongod
+   
+   # Or use MongoDB Atlas (cloud)
+   # Update MONGO_URI in .env file
+   ```
 
-* **Joi** – Request data validation
-* **connect-flash** – Flash messages for notifications
-* **Stripe / Razorpay** – Secure payment processing
+5. **Start the application**
+   ```bash
+   # Development mode
+   npm run dev
+   
+   # Production mode
+   npm start
+   ```
 
----
+## 🔧 Environment Variables
 
-## ⚙️ Getting Started (Local Setup)
+Create a `.env` file in the root directory:
+
+```env
+# Application
+NODE_ENV=development
+PORT=8080
+
+# Database
+MONGO_URI=mongodb://localhost:27017/shopiko
+
+# Security
+SECRET=your-super-secret-key-change-this-in-production
+SESSION_SECRET=another-super-secret-session-key-change-this
+
+# Optional: For production features
+JWT_SECRET=your-jwt-secret-key
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+```
+
+## 🏗️ Project Structure
+
+```
+shopiko/
+├── config/
+│   └── config.js          # Application configuration
+├── middlewares/
+│   ├── middlewares.js     # Authentication middleware
+│   └── security.js        # Security middleware
+├── models/
+│   ├── Product.js         # Product model
+│   ├── Review.js          # Review model
+│   └── User.js            # User model
+├── routes/
+│   ├── api/
+│   │   └── productapi.js  # API routes
+│   ├── auth.js            # Authentication routes
+│   ├── cart.js            # Cart routes
+│   ├── productRoutes.js   # Product routes
+│   ├── review.js          # Review routes
+│   └── static.js          # Static pages
+├── views/                 # EJS templates
+├── public/                # Static assets
+├── app.js                 # Main application file
+├── package.json           # Dependencies
+└── README.md              # This file
+```
+
+## 🔒 Security Features
+
+- **Helmet.js**: Security headers
+- **CORS**: Cross-origin resource sharing
+- **Rate Limiting**: Prevent abuse
+- **Input Sanitization**: XSS protection
+- **Session Security**: Secure session configuration
+- **Environment Variables**: Secure configuration management
+
+## 🚀 Production Deployment
+
+### 1. Environment Setup
+```bash
+# Set production environment
+NODE_ENV=production
+
+# Use strong secrets
+SECRET=your-very-long-random-secret-key
+SESSION_SECRET=another-very-long-random-session-secret
+
+# Database (use MongoDB Atlas or cloud database)
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/shopiko
+
+# Disable debug mode
+DEBUG=false
+```
+
+### 2. Process Manager (PM2)
+```bash
+# Install PM2
+npm install -g pm2
+
+# Start application
+pm2 start app.js --name "shopiko"
+
+# Monitor
+pm2 monit
+
+# Logs
+pm2 logs shopiko
+```
+
+### 3. Reverse Proxy (Nginx)
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+### 4. SSL Certificate (Let's Encrypt)
+```bash
+# Install Certbot
+sudo apt install certbot python3-certbot-nginx
+
+# Get certificate
+sudo certbot --nginx -d yourdomain.com
+```
+
+## 🧪 Testing
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/shopiko.git
-cd shopiko
+# Run tests (when implemented)
+npm test
 
-# 2. Install dependencies
-npm install
+# Lint code
+npm run lint
 
-# 3. Add your environment variables
-# Create a .env file and include:
-# - DB_URL
-# - SECRET
-# - STRIPE_SECRET or RAZORPAY_KEY + RAZORPAY_SECRET
-
-# 4. Start the development server
-npm start
+# Fix linting issues
+npm run lint:fix
 ```
+
+## 📊 Monitoring
+
+- **Health Check**: `GET /health`
+- **Application Info**: `GET /test`
+- **Logs**: Check console output and log files
+
+## 🔧 Development
+
+```bash
+# Start development server with auto-reload
+npm run dev
+
+# Install new dependencies
+npm install package-name
+
+# Update dependencies
+npm update
+```
+
+## 📝 API Endpoints
+
+### Authentication
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - Login user
+- `GET /auth/logout` - Logout user
+
+### Products
+- `GET /products` - List all products
+- `POST /products` - Create new product
+- `GET /products/:id` - Get product details
+- `PATCH /products/:id` - Update product
+- `DELETE /products/:id` - Delete product
+
+### Cart
+- `GET /cart` - View cart
+- `POST /cart/:id` - Add to cart
+- `DELETE /cart/:id` - Remove from cart
+
+### API
+- `POST /api/products/:productId/like` - Like/unlike product
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the ISC License.
+
+## 🆘 Support
+
+- **Issues**: [GitHub Issues](https://github.com/yourusername/shopiko/issues)
+- **Documentation**: Check the code comments and this README
+- **Security**: Report security issues privately
+
+## 🔄 Changelog
+
+### v1.0.0
+- Initial release
+- Basic e-commerce functionality
+- Security middleware
+- Production-ready configuration
+
 ---
 
-## ✨ Future Enhancements
-
-* 📧 Email verification
-* AI Intregation
-* 📦 Order history page for users
-* 📊 Analytics dashboard for admin
-* 🔍 Search and filter by category/price
-
----
-
-## 📣 Credits
-
-Built with ❤️ using the MERN-style stack (MongoDB, Express.js, Node.js) and EJS for templating.
-
----
+**Built with ❤️ using Node.js, Express, MongoDB, and Passport.js**

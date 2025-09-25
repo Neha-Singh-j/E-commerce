@@ -1,0 +1,137 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5 pt-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <h1 class="text-center mb-5 fw-bold" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Frequently Asked Questions</h1>
+      
+      <div class="accordion" id="faqAccordion">
+        <!-- Shopping Questions -->
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading1">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+              <i class="fas fa-shopping-cart me-3 text-primary"></i>
+              How do I place an order?
+            </button>
+          </h2>
+          <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>To place an order, simply browse our products, add items to your cart, and proceed to checkout. You'll need to create an account or log in to complete your purchase. We accept various payment methods including credit cards and digital wallets.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+              <i class="fas fa-shipping-fast me-3 text-success"></i>
+              What are your shipping options?
+            </button>
+          </h2>
+          <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>We offer standard shipping (3-5 business days) and express shipping (1-2 business days). Shipping costs vary based on your location and the shipping method you choose. Free shipping is available on orders over $50.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading3">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+              <i class="fas fa-undo me-3 text-warning"></i>
+              What is your return policy?
+            </button>
+          </h2>
+          <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>We offer a 30-day return policy for most items. Products must be in their original condition and packaging. Some items may have different return policies, which will be clearly stated on the product page.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading4">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+              <i class="fas fa-credit-card me-3 text-info"></i>
+              What payment methods do you accept?
+            </button>
+          </h2>
+          <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and various digital wallets. All transactions are secure and encrypted to protect your information.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading5">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+              <i class="fas fa-user-shield me-3 text-danger"></i>
+              How secure is my personal information?
+            </button>
+          </h2>
+          <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>Your security is our top priority. We use industry-standard SSL encryption to protect all data transmitted between your browser and our servers. We never store your credit card information and only collect the information necessary to process your orders.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading6">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+              <i class="fas fa-headset me-3 text-secondary"></i>
+              How can I contact customer support?
+            </button>
+          </h2>
+          <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>You can reach our customer support team through multiple channels: email at support@shopiko.com, phone at +1 (555) 987-6543, or through our contact form. We typically respond within 24 hours.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading7">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+              <i class="fas fa-store me-3 text-primary"></i>
+              Can I become a seller on Shopiko?
+            </button>
+          </h2>
+          <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>Yes! We welcome new sellers to join our platform. To become a seller, you'll need to create an account and select the "seller" role during registration. You'll then be able to list your products and start selling.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item border-0 shadow mb-3">
+          <h2 class="accordion-header" id="heading8">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+              <i class="fas fa-gift me-3 text-success"></i>
+              Do you offer gift cards?
+            </button>
+          </h2>
+          <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <p>Currently, we don't offer physical gift cards, but you can purchase products as gifts and have them shipped directly to the recipient. We're working on introducing digital gift cards in the near future.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="text-center mt-5">
+        <div class="card shadow border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <div class="card-body p-4">
+            <h4 class="text-white mb-3">Still have questions?</h4>
+            <p class="text-white-50 mb-4">Can't find the answer you're looking for? Our support team is here to help!</p>
+            <a href="/contact" class="btn btn-light btn-lg px-4">Contact Support</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %> 
